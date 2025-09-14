@@ -17,14 +17,18 @@ commands:
     permission: sao.spawn.use
     permission-message: "&cYou do not have permission to use this command."
 
+  region:
+    description: Manage SAO floor regions
+    usage: /region [wand|set <floor>]
+    permission: sao.region.use
+    permission-message: "&cYou do not have permission to use this command."
+
 # Permissions
 permissions:
-  # Basic teleport
+  # Spawn permissions
   sao.spawn.use:
     description: Allows using /spawn to teleport to nearest spawn
     default: true
-
-  # Admin spawn management
   sao.spawn.set:
     description: Allows setting new spawns
     default: op
@@ -34,8 +38,17 @@ permissions:
   sao.spawn.edit:
     description: Allows editing existing spawns
     default: op
-
-  # Optional advanced permissions
   sao.spawn.bypass.cooldown:
     description: Allows bypassing teleport cooldowns
+    default: op
+
+  # Region permissions
+  sao.region.use:
+    description: Allows using /region commands
+    default: op
+  sao.region.wand:
+    description: Allows receiving the Region Wand
+    default: op
+  sao.region.set:
+    description: Allows setting regions for floors
     default: op

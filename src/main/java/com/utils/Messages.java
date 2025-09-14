@@ -21,12 +21,12 @@ public class Messages {
         }
         return msg;
     }
-    public static String getFromTask(String message) {
-        if (message.startsWith("[MSG]:")) {
-            String key = message.replace("[MSG]:", "").trim();
-            return get(key);
+    public static String getRegion(String key, String... replacements) {
+        String msg = format(SwordArtOnline.getInstance().getMessagesManager().getMessage("region", key));
+        for (int i = 0; i < replacements.length - 1; i += 2) {
+            msg = msg.replace(replacements[i], replacements[i + 1]);
         }
-        return format(message);
+        return msg;
     }
 
 }

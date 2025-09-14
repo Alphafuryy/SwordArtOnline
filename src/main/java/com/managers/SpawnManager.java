@@ -2,6 +2,7 @@ package com.managers;
 
 import com.SwordArtOnline;
 import com.utils.Floor;
+import com.utils.Region;
 import com.utils.SpawnPoint;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -29,36 +30,37 @@ public class SpawnManager {
     }
 
     public SpawnPoint getNearestSpawn(Location loc) {
+        Region region = plugin.getRegionManager().getRegionForLocation(loc);
+        if (region == null) {
+            plugin.getLogger().info("No region found for player location: " + loc);
+            return null;
+        }
+
+        String floorName = region.getFloorName();
+        Floor floor = plugin.getFloorManager().getFloor(floorName);
+        if (floor == null) {
+            plugin.getLogger().info("No floor found for region: " + floorName);
+            return null;
+        }
+
         SpawnPoint nearest = null;
         double minDistance = Double.MAX_VALUE;
 
-        plugin.getLogger().info("Searching for nearest spawn to: " + loc);
-        plugin.getLogger().info("Available floors: " + plugin.getFloorManager().getFloors().keySet());
+        for (String spawnName : floor.getSpawnNames()) {
+            SpawnPoint spawn = getSpawn(floor, spawnName);
+            if (spawn == null) continue;
 
-        for (Floor floor : plugin.getFloorManager().getFloors().values()) {
-            plugin.getLogger().info("Floor " + floor.getName() + " has spawns: " + floor.getSpawnNames());
+            if (!region.isInside(spawn.getLocation())) continue;
 
-            for (String spawnName : floor.getSpawnNames()) {
-                SpawnPoint spawn = getSpawn(floor, spawnName);
-                if (spawn == null) {
-                    plugin.getLogger().warning("Failed to load spawn: " + spawnName + " from floor: " + floor.getName());
-                    continue;
-                }
-
-                double distance = spawn.getLocation().distanceSquared(loc);
-                plugin.getLogger().info("Spawn " + spawnName + " distance: " + distance);
-
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    nearest = spawn;
-                    plugin.getLogger().info("New nearest spawn: " + spawnName + " at distance: " + distance);
-                }
+            double distance = spawn.getLocation().distanceSquared(loc);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = spawn;
             }
         }
-
-        plugin.getLogger().info("Final nearest spawn: " + (nearest != null ? nearest.getName() : "NONE"));
         return nearest;
     }
+
     public void setSpawn(Floor floor, String spawnName, Location location) {
         File spawnFile = new File(floor.getFolder(), spawnName + ".yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(spawnFile);

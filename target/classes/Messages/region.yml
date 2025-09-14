@@ -1,0 +1,20 @@
+# =====================================================
+# Region Messages Configuration
+# =====================================================
+# This file contains all messages used by /region command.
+# You can edit these messages freely.
+# Placeholders:
+#   %floor% - The floor name
+# =====================================================
+
+region-usage: '&eUsage: /region wand | /region set <floor>'
+
+region-wand-received: '&aYou received the Region Wand!'
+
+region-selection-incomplete: '&cYou must set both pos1 and pos2 with the wand.'
+
+region-saved: '&aRegion for floor &e%floor% &asaved successfully!'
+
+no-permission: '&cYou do not have permission to use this command.'
+
+only-player: '&cOnly players can run this command.'

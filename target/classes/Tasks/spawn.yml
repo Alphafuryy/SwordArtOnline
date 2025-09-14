@@ -1,77 +1,102 @@
-# teleport-task configuration
+# =====================================================
+# Teleport Task System - Full Customization
+# =====================================================
+# Placeholders:
+#   %player%   - player name
+#   %spawn%    - spawn name
+#   %floor%    - floor name
+#   %seconds%  - total countdown seconds
+#   %countdown% - live countdown (updates each second)
+#
+# Sections: countdown, success, cancel
+# Each section can contain:
+#   actionbar: "text"
+#   title: "text"
+#   subtitle: "text"
+#   chat: "text"
+#   bossbar:
+#     enabled: true
+#     text: "Teleporting in %countdown%..."
+#     color: "GREEN"
+#     style: "SEGMENTED_10"
+#   particle:
+#     enabled: true
+#     type: "VILLAGER_HAPPY"
+#     shape: "circle" # point | circle | sphere | line
+#     radius: 1.5
+#     count: 20
+#   sound:
+#     enabled: true
+#     type: "ENTITY_EXPERIENCE_ORB_PICKUP"
+#     pitch: 1
+#     volume: 1
+#
+# Extra: You can add per-second messages under `countdown-ticks:`
+# Example:
+#   countdown-ticks:
+#     "5": "&e5 seconds left!"
+#     "3": "&63 seconds left!"
+#     "1": "&c1 second left!"
+# =====================================================
+
 teleport-task:
-  # messages used by the listener for quick checks
   in-progress: "&cYou already have a teleport in progress!"
   no-spawn: "&cNo spawn found!"
 
-  # allow small movement (blocks) before cancelling
-  cancel:
-    allow-movement-radius: 0.4   # blocks (distance). set 0 for block-perfect.
-    # cancel messages (referenced by reason keys used in code)
-    move: "&cTeleport cancelled because you moved!"
-    damage: "&cTeleport cancelled because you took damage!"
-    quit: "&cTeleport cancelled because you left the server!"
-    death: "&cTeleport cancelled because you died!"
-    default: "&cTeleport cancelled!"
-    # optional particle shown on cancel
-    particle:
-      enabled: true
-      type: "SMOKE_NORMAL"
-      count: 10
-      speed: 0.05
-      offset-x: 0.5
-      offset-y: 0.5
-      offset-z: 0.5
-
-  # Countdown (before teleport)
   countdown:
-    # extra chat message and titles
-    extra-message: "&7Stay still and don't take damage!"
+    actionbar: "&#ff6600Teleporting in %countdown% &7seconds..."
     title: "&eTeleporting..."
-    subtitle: "&7%seconds% seconds remaining"
-    fade-in: 5
-    stay: 20
-    fade-out: 5
-
-    # Actionbar specific settings (rich customization)
-    actionbar:
+    subtitle: "&7Stay still!"
+    chat: "&7Don’t move or take damage!"
+    bossbar:
       enabled: true
-      # supports placeholders: %seconds%, %progress% (if progress enabled), %spawn%, %player%
-      # supports hex colors with '&#AABBCC' or '&#ABC' and normal & codes
-      format: "&#00FF99Teleporting to &e%spawn% &7| &b%seconds%s %progress%"
-      update-interval: 20   # ticks between actionbar updates (20 ticks = 1 second)
-      progress:
-        enabled: true
-        length: 12
-        filled-char: "█"
-        empty-char: "░"
-
-    # particles while counting down
+      text: "&6Teleporting: %countdown%"
+      color: "YELLOW"
+      style: "SEGMENTED_10"
     particle:
       enabled: true
       type: "SPELL_WITCH"
-      # pattern: circle | spiral | burst | rising
-      pattern: "spiral"
-      count: 24            # number of particle 'points' used by pattern
-      radius: 1.2
-      height: 1.0
-      speed: 0.0
-      update-interval: 2   # ticks between particle updates
-      initial-burst: true  # single burst immediately when countdown starts
+      shape: "circle"
+      radius: 1.5
+      count: 25
+    sound:
+      enabled: true
+      type: "BLOCK_NOTE_BLOCK_PLING"
+      pitch: 1
+      volume: 1
+    countdown-ticks:
+      "5": "&e5 seconds left!"
+      "3": "&63 seconds left!"
+      "1": "&c1 second left!"
 
-  # What to send on success
   success:
-    actionbar: "&#33FF88Teleported to &e%spawn%!"
-    title: "&aTeleported!"
-    subtitle: ""
-    fade-in: 5
-    stay: 20
-    fade-out: 5
+    actionbar: "&aTeleported to &b%spawn%!"
+    title: "&#55ff55Teleport Success!"
+    subtitle: "&7Welcome to %floor%"
     particle:
       enabled: true
       type: "VILLAGER_HAPPY"
+      shape: "sphere"
+      radius: 1.0
+      count: 15
+    sound:
+      enabled: true
+      type: "ENTITY_PLAYER_LEVELUP"
+      pitch: 1
+      volume: 1
+
+  cancel:
+    move: "&cCancelled because you moved!"
+    damage: "&cCancelled because you took damage!"
+    particle:
+      enabled: true
+      type: "SMOKE_NORMAL"
+      shape: "circle"
+      radius: 1.0
       count: 10
-      speed: 0.05
-      offset-x: 0.5
-      offset-y: 1.0
-      offset-z: 0.5
+    sound:
+      enabled: true
+      type: "ENTITY_VILLAGER_NO"
+      pitch: 1
+      volume: 1
+    move-threshold: 0.2

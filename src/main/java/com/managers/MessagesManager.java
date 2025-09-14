@@ -8,54 +8,57 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MessagesManager {
 
     private final SwordArtOnline plugin;
-    private FileConfiguration messagesConfig;
-    private File messagesFile;
+    private final Map<String, FileConfiguration> configs = new HashMap<>();
+    private final Map<String, File> files = new HashMap<>();
 
     public MessagesManager(SwordArtOnline plugin) {
         this.plugin = plugin;
     }
 
-    public void loadMessages() {
+    /**
+     * Load a message file (creates it if it doesn't exist)
+     * @param name The file name without extension (e.g., "spawn" or "region")
+     */
+    public void loadMessages(String name) {
         File folder = new File(plugin.getDataFolder(), "Messages");
         if (!folder.exists()) folder.mkdirs();
 
-        messagesFile = new File(folder, "spawn.yml");
-
-        // If it doesn't exist in data folder, copy it from resources
-        if (!messagesFile.exists()) {
-            plugin.saveResource("Messages/spawn.yml", false);
+        File file = new File(folder, name + ".yml");
+        if (!file.exists()) {
+            plugin.saveResource("Messages/" + name + ".yml", false);
         }
 
-        messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
-        // Load defaults from resource as fallback (optional)
-        try (InputStream in = plugin.getResource("Messages/spawn.yml")) {
+        // Load defaults from resource as fallback
+        try (InputStream in = plugin.getResource("Messages/" + name + ".yml")) {
             if (in != null) {
                 FileConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(in));
-                messagesConfig.setDefaults(defaultConfig);
-                messagesConfig.options().copyDefaults(true);
-                saveMessages();
+                cfg.setDefaults(defaultConfig);
+                cfg.options().copyDefaults(true);
+                cfg.save(file);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void saveMessages() {
-        try {
-            messagesConfig.save(messagesFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        configs.put(name, cfg);
+        files.put(name, file);
     }
 
     public String getMessage(String key) {
-        String message = messagesConfig.getString(key, key);
-        plugin.getLogger().info("Loading message for key '" + key + "': " + message);
-        return message;
+        return getMessage("spawn", key); // default to spawn.yml
+    }
+
+    public String getMessage(String fileName, String key) {
+        FileConfiguration cfg = configs.get(fileName);
+        if (cfg == null) return key; // fallback to key
+        return cfg.getString(key, key);
     }
 }
