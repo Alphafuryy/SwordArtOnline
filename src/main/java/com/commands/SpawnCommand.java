@@ -33,7 +33,6 @@ public class SpawnCommand implements CommandExecutor {
                 player.sendMessage(Messages.get("no-permission"));
                 return true;
             }
-
             teleportListener.startTeleport(player, 100L); // 5 seconds
             return true;
         }

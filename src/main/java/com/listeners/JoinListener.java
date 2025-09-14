@@ -21,13 +21,13 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onFirstJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
         if (!player.hasPlayedBefore()) {
             SpawnPoint nearest = plugin.getSpawnManager().getNearestSpawn(player.getLocation());
             if (nearest != null) {
                 Location loc = nearest.getLocation();
                 Bukkit.getScheduler().runTaskLater(plugin, () -> player.teleport(loc), 1L);
             }
+
         }
     }
 }

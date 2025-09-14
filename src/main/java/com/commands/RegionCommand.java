@@ -38,6 +38,7 @@ public class RegionCommand implements CommandExecutor {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }
+
                 player.getInventory().addItem(RegionListener.getWand());
                 player.sendMessage(Messages.getRegion("region-wand-received"));
             }
