@@ -1,0 +1,44 @@
+# =====================================================
+# Spawn Messages Configuration
+# =====================================================
+# This file contains all messages used by the /spawn command.
+# You can edit these messages freely.
+# Placeholders:
+#   %spawn% - The name of the spawn
+#   %floor% - The name of the floor
+#   %subcommand% - The subcommand used (set, edit, delete)
+#   Use & followed by a Minecraft color code for colors (e.g., &a for green)
+# =====================================================
+
+# Message displayed when a spawn is successfully set
+spawn-set: '&aSpawn &e%spawn% &aset for floor &e%floor%&a!'
+
+# Message displayed when a spawn is successfully deleted
+spawn-deleted: '&cSpawn &e%spawn% &cdeleted from floor &e%floor%&c!'
+
+# Message displayed when a spawn is successfully edited
+spawn-edited: '&aSpawn &e%spawn% &aupdated for floor &e%floor%&a!'
+
+# Message displayed when the player uses the wrong command syntax
+usage: '&cUsage: /spawn <set|delete|edit> <spawnname> <floorname>'
+
+# Message displayed when a non-player tries to execute the command
+only-player: '&cOnly players can run this command.'
+
+# Message displayed when the specified floor does not exist
+floor-not-found: '&cFloor &e%floor% &cnot found.'
+
+# Message displayed when the specified spawn does not exist
+spawn-not-found: '&cSpawn &e%spawn% &cnot found.'
+
+# Message displayed when an unknown subcommand is used
+unknown-subcommand: '&cUnknown subcommand: &e%subcommand%'
+
+# Teleportation messages
+teleport-start: '&aTeleporting to nearest spawn in &e%seconds% &aseconds... Stay still
+  and take no damage!'
+teleport-success: '&aTeleported to nearest spawn!'
+teleport-in-progress: '&cYou already have a teleport in progress!'
+teleport-no-spawn: '&cNo spawn found!'
+teleport-cancel-move: '&cTeleport cancelled because you moved!'
+teleport-cancel-damage: '&cTeleport cancelled because you took damage!'
