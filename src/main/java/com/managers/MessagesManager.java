@@ -54,6 +54,8 @@ public class MessagesManager {
     }
 
     public String getMessage(String key) {
-        return messagesConfig.getString(key, key);
+        String message = messagesConfig.getString(key, key);
+        plugin.getLogger().info("Loading message for key '" + key + "': " + message);
+        return message;
     }
 }

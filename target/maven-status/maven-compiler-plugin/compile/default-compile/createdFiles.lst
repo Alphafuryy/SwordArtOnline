@@ -1,7 +1,9 @@
+com\tasks\TeleportTask$1.class
 com\utils\SpawnPoint.class
 com\listeners\TeleportListener.class
 com\managers\FloorManager.class
 com\tasks\TeleportTask.class
+com\utils\TextUtil.class
 com\tabcompleters\SpawnTabCompleter.class
 com\managers\SpawnManager.class
 com\listeners\JoinListener.class

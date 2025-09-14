@@ -34,11 +34,3 @@ spawn-not-found: '&cSpawn &e%spawn% &cnot found.'
 # Message displayed when an unknown subcommand is used
 unknown-subcommand: '&cUnknown subcommand: &e%subcommand%'
 
-# Teleportation messages
-teleport-start: '&aTeleporting to nearest spawn in &e%seconds% &aseconds... Stay still
-  and take no damage!'
-teleport-success: '&aTeleported to nearest spawn!'
-teleport-in-progress: '&cYou already have a teleport in progress!'
-teleport-no-spawn: '&cNo spawn found!'
-teleport-cancel-move: '&cTeleport cancelled because you moved!'
-teleport-cancel-damage: '&cTeleport cancelled because you took damage!'

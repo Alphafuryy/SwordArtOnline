@@ -32,23 +32,33 @@ public class SpawnManager {
         SpawnPoint nearest = null;
         double minDistance = Double.MAX_VALUE;
 
-        // Use plugin.getFloorManager() instead of undefined floorManager
+        plugin.getLogger().info("Searching for nearest spawn to: " + loc);
+        plugin.getLogger().info("Available floors: " + plugin.getFloorManager().getFloors().keySet());
+
         for (Floor floor : plugin.getFloorManager().getFloors().values()) {
+            plugin.getLogger().info("Floor " + floor.getName() + " has spawns: " + floor.getSpawnNames());
+
             for (String spawnName : floor.getSpawnNames()) {
                 SpawnPoint spawn = getSpawn(floor, spawnName);
-                if (spawn == null) continue;
+                if (spawn == null) {
+                    plugin.getLogger().warning("Failed to load spawn: " + spawnName + " from floor: " + floor.getName());
+                    continue;
+                }
 
                 double distance = spawn.getLocation().distanceSquared(loc);
+                plugin.getLogger().info("Spawn " + spawnName + " distance: " + distance);
+
                 if (distance < minDistance) {
                     minDistance = distance;
                     nearest = spawn;
+                    plugin.getLogger().info("New nearest spawn: " + spawnName + " at distance: " + distance);
                 }
             }
         }
 
+        plugin.getLogger().info("Final nearest spawn: " + (nearest != null ? nearest.getName() : "NONE"));
         return nearest;
     }
-
     public void setSpawn(Floor floor, String spawnName, Location location) {
         File spawnFile = new File(floor.getFolder(), spawnName + ".yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(spawnFile);
@@ -67,16 +77,37 @@ public class SpawnManager {
         }
 
         floor.addSpawn(spawnName);
-        plugin.getFloorManager().loadFloors(); // refresh
+        // Remove this: plugin.getFloorManager().loadFloors(); // refresh
     }
 
     public SpawnPoint getSpawn(Floor floor, String spawnName) {
         File spawnFile = new File(floor.getFolder(), spawnName + ".yml");
-        if (!spawnFile.exists()) return null;
+
+        // Add debug logging
+        plugin.getLogger().info("Looking for spawn file: " + spawnFile.getAbsolutePath());
+        plugin.getLogger().info("File exists: " + spawnFile.exists());
+
+        if (!spawnFile.exists()) {
+            plugin.getLogger().warning("Spawn file not found: " + spawnName + ".yml in floor " + floor.getName());
+            return null;
+        }
 
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(spawnFile);
+
+        // Check if world exists
+        String worldName = cfg.getString("world");
+        if (worldName == null) {
+            plugin.getLogger().warning("World not specified in spawn file: " + spawnName);
+            return null;
+        }
+
+        if (Bukkit.getWorld(worldName) == null) {
+            plugin.getLogger().warning("World not found: " + worldName + " for spawn: " + spawnName);
+            return null;
+        }
+
         Location loc = new Location(
-                Bukkit.getWorld(cfg.getString("world")),
+                Bukkit.getWorld(worldName),
                 cfg.getDouble("x"),
                 cfg.getDouble("y"),
                 cfg.getDouble("z"),
@@ -84,7 +115,6 @@ public class SpawnManager {
                 (float) cfg.getDouble("pitch")
         );
 
-        // Pass the floor to SpawnPoint constructor
         return new SpawnPoint(spawnName, loc, floor);
     }
 }

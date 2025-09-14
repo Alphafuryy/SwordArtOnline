@@ -1,52 +1,102 @@
 # =====================================================
-# Spawn Teleport Task Customization
+# Teleport Task System - Full Customization
 # =====================================================
-# Edit this file to change teleport task behavior:
 # Placeholders:
-#   %spawn% - spawn name
-#   %floor% - floor name
-#   %seconds% - countdown seconds
-#   %player% - player name
-# Messages can reference default messages using [MSG]: %key%
-# Titles support & color codes
-# Particles can be enabled with type and count
+#   %player%   - player name
+#   %spawn%    - spawn name
+#   %floor%    - floor name
+#   %seconds%  - total countdown seconds
+#   %countdown% - live countdown (updates each second)
+#
+# Sections: countdown, success, cancel
+# Each section can contain:
+#   actionbar: "text"
+#   title: "text"
+#   subtitle: "text"
+#   chat: "text"
+#   bossbar:
+#     enabled: true
+#     text: "Teleporting in %countdown%..."
+#     color: "GREEN"
+#     style: "SEGMENTED_10"
+#   particle:
+#     enabled: true
+#     type: "VILLAGER_HAPPY"
+#     shape: "circle" # point | circle | sphere | line
+#     radius: 1.5
+#     count: 20
+#   sound:
+#     enabled: true
+#     type: "ENTITY_EXPERIENCE_ORB_PICKUP"
+#     pitch: 1
+#     volume: 1
+#
+# Extra: You can add per-second messages under `countdown-ticks:`
+# Example:
+#   countdown-ticks:
+#     "5": "&e5 seconds left!"
+#     "3": "&63 seconds left!"
+#     "1": "&c1 second left!"
 # =====================================================
 
 teleport-task:
+  in-progress: "&cYou already have a teleport in progress!"
+  no-spawn: "&cNo spawn found!"
+
   countdown:
-    # The message displayed in actionbar during countdown
-    actionbar: "[MSG]: %teleport-start%"
-    # Optional extra message
-    extra-message: "&aPrepare for teleport!"
-    # Show title during countdown
+    actionbar: "&#ff6600Teleporting in %countdown% &7seconds..."
     title: "&eTeleporting..."
-    subtitle: "[MSG]: %teleport-start%"
-    fade-in: 5
-    stay: 20
-    fade-out: 5
-    # Particle effect
+    subtitle: "&7Stay still!"
+    chat: "&7Don’t move or take damage!"
+    bossbar:
+      enabled: true
+      text: "&6Teleporting: %countdown%"
+      color: "YELLOW"
+      style: "SEGMENTED_10"
     particle:
       enabled: true
       type: "SPELL_WITCH"
-      count: 10
-      speed: 0.1
-      offset-x: 0.5
-      offset-y: 1
-      offset-z: 0.5
+      shape: "circle"
+      radius: 1.5
+      count: 25
+    sound:
+      enabled: true
+      type: "BLOCK_NOTE_BLOCK_PLING"
+      pitch: 1
+      volume: 1
+    countdown-ticks:
+      "5": "&e5 seconds left!"
+      "3": "&63 seconds left!"
+      "1": "&c1 second left!"
 
   success:
-    actionbar: "[MSG]: %teleport-success%"
-    title: "&aTeleported!"
-    subtitle: ""
+    actionbar: "&aTeleported to &b%spawn%!"
+    title: "&#55ff55Teleport Success!"
+    subtitle: "&7Welcome to %floor%"
     particle:
       enabled: true
       type: "VILLAGER_HAPPY"
-      count: 5
-      speed: 0.1
-      offset-x: 0.5
-      offset-y: 1
-      offset-z: 0.5
+      shape: "sphere"
+      radius: 1.0
+      count: 15
+    sound:
+      enabled: true
+      type: "ENTITY_PLAYER_LEVELUP"
+      pitch: 1
+      volume: 1
 
   cancel:
-    move: "[MSG]: %teleport-cancel-move%"
-    damage: "[MSG]: %teleport-cancel-damage%"
+    move: "&cCancelled because you moved!"
+    damage: "&cCancelled because you took damage!"
+    particle:
+      enabled: true
+      type: "SMOKE_NORMAL"
+      shape: "circle"
+      radius: 1.0
+      count: 10
+    sound:
+      enabled: true
+      type: "ENTITY_VILLAGER_NO"
+      pitch: 1
+      volume: 1
+    move-threshold: 0.2
