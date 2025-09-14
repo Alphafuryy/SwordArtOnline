@@ -48,18 +48,9 @@ public final class SwordArtOnline extends JavaPlugin {
     }
 
     private void registerCommands() {
-        // Create command executor and tab completer
         SpawnCommand spawnCommand = new SpawnCommand(this, teleportListener);
-        SpawnTabCompleter spawnTabCompleter = new SpawnTabCompleter(this);
-
-        // Register the command executor and tab completer
-        PluginCommand command = getCommand("spawn");
-        if (command != null) {
-            command.setExecutor(spawnCommand);
-            command.setTabCompleter(spawnTabCompleter);
-        } else {
-            getLogger().warning("Failed to register /spawn command!");
-        }
+        getCommand("spawn").setExecutor(spawnCommand);
+        getCommand("spawn").setTabCompleter(new SpawnTabCompleter(this));
     }
 
 

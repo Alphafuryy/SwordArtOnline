@@ -28,18 +28,42 @@ public class SpawnCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            // Just /spawn → teleport to nearest spawn
-            teleportListener.startTeleport(player, 100L); // 5 seconds = 100 ticks
+            // Check permission for basic teleport
+            if (!player.hasPermission("sao.spawn.use")) {
+                player.sendMessage(Messages.get("no-permission"));
+                return true;
+            }
+
+            teleportListener.startTeleport(player, 100L); // 5 seconds
             return true;
         }
 
-        // Optional: admin commands like set/delete/edit
         String action = args[0].toLowerCase();
         switch (action) {
-            case "set" -> handleSet(player, args);
-            case "delete" -> handleDelete(player, args);
-            case "edit" -> handleEdit(player, args);
-            default -> player.sendMessage(Messages.get("unknown-subcommand", "%subcommand%", action));
+            case "set":
+                if (!player.hasPermission("sao.spawn.set")) {
+                    player.sendMessage(Messages.get("no-permission"));
+                    return true;
+                }
+                handleSet(player, args);
+                break;
+            case "delete":
+                if (!player.hasPermission("sao.spawn.delete")) {
+                    player.sendMessage(Messages.get("no-permission"));
+                    return true;
+                }
+                handleDelete(player, args);
+                break;
+            case "edit":
+                if (!player.hasPermission("sao.spawn.edit")) {
+                    player.sendMessage(Messages.get("no-permission"));
+                    return true;
+                }
+                handleEdit(player, args);
+                break;
+            default:
+                player.sendMessage(Messages.get("unknown-subcommand", "%subcommand%", action));
+                break;
         }
 
         return true;
