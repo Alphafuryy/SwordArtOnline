@@ -1,0 +1,31 @@
+name: SwordArtOnline
+version: '0.1-BETA'
+main: com.SwordArtOnline
+api-version: '1.21'
+authors: [Katieey]
+description: Sword Art Online Copy in Minecraft Took to much time
+
+# Permissions
+permissions:
+  # Basic teleport
+  sao.spawn.use:
+    description: Allows using /spawn to teleport to nearest spawn
+    default: true
+
+  # Admin spawn management
+  sao.spawn.set:
+    description: Allows setting new spawns
+    default: op
+
+  sao.spawn.delete:
+    description: Allows deleting spawns
+    default: op
+
+  sao.spawn.edit:
+    description: Allows editing existing spawns
+    default: op
+
+  # Optional advanced permissions
+  sao.spawn.bypass.cooldown:
+    description: Allows bypassing teleport cooldowns
+    default: op
