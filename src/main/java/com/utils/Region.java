@@ -1,3 +1,4 @@
+// Region.java
 package com.utils;
 
 import org.bukkit.Bukkit;
@@ -7,6 +8,7 @@ public class Region {
     private final String floorName;
     private final Location pos1;
     private final Location pos2;
+    private String structureType;
 
     public Region(String floorName, Location pos1, Location pos2) {
         this.floorName = floorName;
@@ -24,6 +26,14 @@ public class Region {
 
     public Location getPos2() {
         return pos2;
+    }
+
+    public String getStructureType() {
+        return structureType;
+    }
+
+    public void setStructureType(String structureType) {
+        this.structureType = structureType;
     }
 
     public boolean isInside(Location loc) {

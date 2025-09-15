@@ -5,15 +5,31 @@
 # You can edit these messages freely.
 # Placeholders:
 #   %floor% - The floor name
+#   %type% - The structure type
+#   %name% - The region or structure name
+#   %structure% - The structure name
 # =====================================================
 
-region-usage: '&eUsage: /region wand | /region set <floor>'
+region-usage: '&eUsage: /region wand | /region set <floor> | /region structure <type> <floor> | /region list | /region delete <name>'
 
 region-wand-received: '&aYou received the Region Wand!'
 
 region-selection-incomplete: '&cYou must set both pos1 and pos2 with the wand.'
 
 region-saved: '&aRegion for floor &e%floor% &asaved successfully!'
+
+structure-usage: '&cUsage: /region structure <type> <floor>'
+structure-saved: '&aStructure region of type &e%type% &asaved for floor &e%floor%'
+
+region-list-header: '&6=== Floor Regions ==='
+structure-list-header: '&6=== Structure Regions ==='
+region-list-item: '&7- %floor%'
+structure-list-item: '&7- %structure%'
+
+delete-usage: '&cUsage: /region delete <name>'
+region-deleted: '&aRegion &e%name% &ahas been deleted'
+structure-deleted: '&aStructure region &e%name% &ahas been deleted'
+not-found: '&cRegion or structure &e%name% &cnot found'
 
 no-permission: '&cYou do not have permission to use this command.'
 
