@@ -1,4 +1,3 @@
-// RegionTabCompleter.java
 package com.tabcompleters;
 
 import com.SwordArtOnline;
@@ -20,38 +19,51 @@ public class RegionTabCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        List<String> list = new ArrayList<>();
+        List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {
-            list.add("wand");
-            list.add("set");
-            list.add("structure");
-            list.add("list");
-            list.add("delete");
-            return list.stream().filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
-        }
-
-        if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("set")) {
-                list.addAll(plugin.getFloorManager().getFloors().keySet());
-            } else if (args[0].equalsIgnoreCase("structure")) {
-                list.add("dungeon");
-                list.add("boss");
-                list.add("safezone");
-                list.add("shop");
-                list.add("teleporter");
-            } else if (args[0].equalsIgnoreCase("delete")) {
-                list.addAll(plugin.getRegionManager().getRegions().keySet());
-                list.addAll(plugin.getRegionManager().getStructureRegions().keySet());
+            completions.add("wand");
+            completions.add("create");
+            completions.add("edit");
+            completions.add("list");
+            completions.add("delete");
+            completions.add("info");
+            completions.add("settings");
+            completions.add("structure");
+        } else if (args.length == 2) {
+            switch (args[0].toLowerCase()) {
+                case "create":
+                    completions.addAll(List.of("floor", "structure", "safezone", "arena", "restricted"));
+                    break;
+                case "edit":
+                case "delete":
+                case "info":
+                    completions.addAll(plugin.getRegionManager().getRegions().keySet());
+                    break;
+                case "list":
+                    completions.addAll(List.of("floor", "structure", "safezone", "arena", "restricted"));
+                    break;
+                case "structure":
+                    completions.addAll(List.of("create", "delete", "list", "info"));
+                    break;
             }
-            return list.stream().filter(s -> s.toLowerCase().startsWith(args[1].toLowerCase())).collect(Collectors.toList());
+        } else if (args.length == 3) {
+            switch (args[0].toLowerCase()) {
+                case "create":
+                    if ("structure".equalsIgnoreCase(args[1])) {
+                        completions.addAll(plugin.getRegionManager().getStructureTypes().keySet());
+                    }
+                    break;
+                case "structure":
+                    if ("delete".equalsIgnoreCase(args[1]) || "info".equalsIgnoreCase(args[1])) {
+                        completions.addAll(plugin.getRegionManager().getStructureTypes().keySet());
+                    }
+                    break;
+            }
         }
 
-        if (args.length == 3 && args[0].equalsIgnoreCase("structure")) {
-            list.addAll(plugin.getFloorManager().getFloors().keySet());
-            return list.stream().filter(s -> s.toLowerCase().startsWith(args[2].toLowerCase())).collect(Collectors.toList());
-        }
-
-        return list;
+        return completions.stream()
+                .filter(s -> s.toLowerCase().startsWith(args[args.length - 1].toLowerCase()))
+                .collect(Collectors.toList());
     }
 }

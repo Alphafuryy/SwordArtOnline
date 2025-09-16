@@ -6,7 +6,7 @@ authors:
   - Katieey
 description: >
   Sword Art Online inspired Minecraft plugin.
-  Handles floors, spawns, teleportation, and advanced SAO mechanics.
+  Handles floors, spawns, teleportation, and advanced  mechanics.
 
 # Commands
 commands:
@@ -17,45 +17,45 @@ commands:
     description: Teleport to nearest spawn or manage spawns
     usage: /spawn [set|delete|edit]
     aliases: [sp]
-    permission: sao.spawn.use
+    permission: .spawn.use
     permission-message: "&cYou do not have permission to use this command."
   skill:
-    description: Manage SAO floor regions
+    description: Manage  floor regions
     usage: /skill [wand|set <floor>]
-    permission: sao.region.use
+    permission: .region.use
     permission-message: "&cYou do not have permission to use this command."
   region:
-    description: Manage SAO floor regions
+    description: Manage  floor regions
     usage: /region [wand|set <floor>]
-    permission: sao.region.use
+    permission: .region.use
     permission-message: "&cYou do not have permission to use this command."
 
 # Permissions
 permissions:
   # Spawn permissions
-  sao.spawn.use:
+  .spawn.use:
     description: Allows using /spawn to teleport to nearest spawn
     default: true
-  sao.spawn.set:
+  .spawn.set:
     description: Allows setting new spawns
     default: op
-  sao.spawn.delete:
+  .spawn.delete:
     description: Allows deleting spawns
     default: op
-  sao.spawn.edit:
+  .spawn.edit:
     description: Allows editing existing spawns
     default: op
-  sao.spawn.bypass.cooldown:
+  .spawn.bypass.cooldown:
     description: Allows bypassing teleport cooldowns
     default: op
 
   # Region permissions
-  sao.region.use:
+  .region.use:
     description: Allows using /region commands
     default: op
-  sao.region.wand:
+  .region.wand:
     description: Allows receiving the Region Wand
     default: op
-  sao.region.set:
+  .region.set:
     description: Allows setting regions for floors
     default: op

@@ -1,36 +1,105 @@
 # =====================================================
 # Region Messages Configuration
 # =====================================================
-# This file contains all messages used by /region command.
-# You can edit these messages freely.
+# This file contains ALL messages used by the region system.
+# You can edit these messages freely using color codes with &
 # Placeholders:
-#   %floor% - The floor name
-#   %type% - The structure type
-#   %name% - The region or structure name
-#   %structure% - The structure name
+#   %name% - Region or structure name
+#   %type% - Region type
+#   %structure% - Structure type
+#   %setting% - Setting name
+#   %value% - Setting value
+#   %world% - World name
+#   %x%, %y%, %z% - Coordinates
+#   %pos1%, %pos2% - Position strings
+#   %key% - Setting key
 # =====================================================
 
-region-usage: '&eUsage: /region wand | /region set <floor> | /region structure <type> <floor> | /region list | /region delete <name>'
+# Command usage messages
+region-usage: "&6=== Region Command Usage ==="
+region-wand-usage: "&e/region wand &7- Get selection wand"
+region-create-usage: "&e/region create <name> <type> [structureType] &7- Create region"
+region-edit-usage: "&e/region edit <name> <setting> <value> &7- Edit region settings"
+region-list-usage: "&e/region list [type] &7- List regions"
+region-delete-usage: "&e/region delete <name> &7- Delete region"
+region-info-usage: "&e/region info <name> &7- Show region info"
+region-settings-usage: "&e/region settings &7- Show available settings"
+region-structure-create-usage: "&e/region structure create <name> &7- Create structure type"
+region-structure-delete-usage: "&e/region structure delete <name> &7- Delete structure type"
+region-structure-list-usage: "&e/region structure list &7- List structure types"
+region-structure-info-usage: "&e/region structure info <name> &7- Show structure type info"
 
-region-wand-received: '&aYou received the Region Wand!'
+# Structure command messages
+structure-usage: "&cUsage: /region structure create|delete|list|info <name>"
+structure-create-usage: "&cUsage: /region structure create <name>"
+structure-delete-usage: "&cUsage: /region structure delete <name>"
+structure-info-usage: "&cUsage: /region structure info <name>"
 
-region-selection-incomplete: '&cYou must set both pos1 and pos2 with the wand.'
+# Success messages
+region-wand-received: "&aYou received the Region Wand!"
+region-created: "&aRegion &e%name% &acreated as type &e%type%"
+region-saved: "&aRegion &e%name% &asaved successfully!"
+region-deleted: "&aRegion &e%name% &adeleted successfully!"
+structure-type-created: "&aStructure type &e%name% &acreated successfully!"
+structure-type-deleted: "&aStructure type &e%name% &adeleted successfully!"
+setting-updated: "&aSetting &e%setting% &aupdated to &e%value%"
 
-region-saved: '&aRegion for floor &e%floor% &asaved successfully!'
+# Error messages
+no-permission: "&cYou do not have permission to use this command."
+only-player: "&cOnly players can run this command."
+region-selection-incomplete: "&cYou must set both pos1 and pos2 with the wand."
+region-exists: "&cRegion &e%name% &calready exists!"
+not-found: "&cRegion or structure &e%name% &cnot found!"
+structure-type-exists: "&cStructure type &e%name% &calready exists!"
+structure-type-not-found: "&cStructure type &e%name% &cnot found!"
+invalid-setting-value: "&cInvalid value &e%value% &cfor setting &e%setting%"
+update-failed: "&cFailed to update region settings"
 
-structure-usage: '&cUsage: /region structure <type> <floor>'
-structure-saved: '&aStructure region of type &e%type% &asaved for floor &e%floor%'
+# List messages
+region-list-header: "&6=== Regions ==="
+structure-list-header: "&6=== Structure Regions ==="
+structure-type-list-header: "&6=== Structure Types ==="
+region-list-item: "&7- &e%name% &7(&6%type%&7)"
+region-list-structure-append: " &7[&a%structure%&7]"
+structure-list-item: "&7- %structure%"
+structure-type-item: "&7- %name%"
+no-regions-found: "&7No regions found"
+no-structure-types: "&7No structure types found"
 
-region-list-header: '&6=== Floor Regions ==='
-structure-list-header: '&6=== Structure Regions ==='
-region-list-item: '&7- %floor%'
-structure-list-item: '&7- %structure%'
+# Info messages
+region-info-header: "&6=== Region Info: %name% ==="
+region-info-type: "&7Type: &e%type%"
+region-info-structure: "&7Structure: &a%structure%"
+region-info-world: "&7World: &b%world%"
+region-info-bounds: "&7Bounds: &3%pos1% &7-> &3%pos2%"
+region-info-settings-header: "&7Settings:"
+structure-type-info-header: "&6=== Structure Type: %name% ==="
 
-delete-usage: '&cUsage: /region delete <name>'
-region-deleted: '&aRegion &e%name% &ahas been deleted'
-structure-deleted: '&aStructure region &e%name% &ahas been deleted'
-not-found: '&cRegion or structure &e%name% &cnot found'
+# Settings messages
+available-settings-header: "&6=== Available Region Settings ==="
+boolean-settings-header: "&7Boolean settings (true/false):"
+string-settings-header: "&7String settings:"
+setting-display: "  &7%key%: &f%value%"
 
-no-permission: '&cYou do not have permission to use this command.'
+# Setting descriptions
+setting-pvp-description: "&e- pvp &7- Enable/disable PVP"
+setting-entry-allowed-description: "&e- entry-allowed &7- Allow/disallow entry"
+setting-mob-spawning-description: "&e- mob-spawning &7- Allow mob spawning"
+setting-block-break-description: "&e- block-break &7- Allow block breaking"
+setting-block-place-description: "&e- block-place &7- Allow block placing"
+setting-damage-players-description: "&e- damage-players &7- Allow player damage"
+setting-damage-mobs-description: "&e- damage-mobs &7- Allow mob damage"
+setting-hunger-drain-description: "&e- hunger-drain &7- Allow hunger drain"
+setting-teleport-on-entry-description: "&e- teleport-on-entry &7- Teleport on region entry"
+setting-entry-message-description: "&e- entry-message &7- Message shown on entry"
+setting-exit-message-description: "&e- exit-message &7- Message shown on exit"
 
-only-player: '&cOnly players can run this command.'
+# Location format
+location-format: "(%x%, %y%, %z%)"
+
+# Usage error messages
+create-usage: "&cUsage: /region create <name> <type> [structureType]"
+edit-usage: "&cUsage: /region edit <name> <setting> <value>"
+delete-usage: "&cUsage: /region delete <name>"
+info-usage: "&cUsage: /region info <name>"
+settings-usage: "&cUsage: /region settings"
