@@ -29,7 +29,7 @@ public class SpawnCommand implements CommandExecutor {
 
         if (args.length == 0) {
             // Check permission for basic teleport
-            if (!player.hasPermission("sao.spawn.use")) {
+            if (!player.hasPermission(".spawn.use")) {
                 player.sendMessage(Messages.get("no-permission"));
                 return true;
             }
@@ -40,21 +40,21 @@ public class SpawnCommand implements CommandExecutor {
         String action = args[0].toLowerCase();
         switch (action) {
             case "set":
-                if (!player.hasPermission("sao.spawn.set")) {
+                if (!player.hasPermission(".spawn.set")) {
                     player.sendMessage(Messages.get("no-permission"));
                     return true;
                 }
                 handleSet(player, args);
                 break;
             case "delete":
-                if (!player.hasPermission("sao.spawn.delete")) {
+                if (!player.hasPermission(".spawn.delete")) {
                     player.sendMessage(Messages.get("no-permission"));
                     return true;
                 }
                 handleDelete(player, args);
                 break;
             case "edit":
-                if (!player.hasPermission("sao.spawn.edit")) {
+                if (!player.hasPermission(".spawn.edit")) {
                     player.sendMessage(Messages.get("no-permission"));
                     return true;
                 }

@@ -35,7 +35,7 @@ public class RegionCommand implements CommandExecutor {
 
         switch (args[0].toLowerCase()) {
             case "wand" -> {
-                if (!player.hasPermission("sao.region.wand")) {
+                if (!player.hasPermission(".region.wand")) {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }
@@ -44,7 +44,7 @@ public class RegionCommand implements CommandExecutor {
                 player.sendMessage(Messages.getRegion("region-wand-received"));
             }
             case "set" -> {
-                if (!player.hasPermission("sao.region.set")) {
+                if (!player.hasPermission(".region.set")) {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }
@@ -68,7 +68,7 @@ public class RegionCommand implements CommandExecutor {
                 player.sendMessage(Messages.getRegion("region-saved", "%floor%", floor));
             }
             case "structure" -> {
-                if (!player.hasPermission("sao.region.structure")) {
+                if (!player.hasPermission(".region.structure")) {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }
@@ -95,7 +95,7 @@ public class RegionCommand implements CommandExecutor {
                         "%type%", structureType, "%floor%", floor));
             }
             case "list" -> {
-                if (!player.hasPermission("sao.region.list")) {
+                if (!player.hasPermission(".region.list")) {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }
@@ -111,7 +111,7 @@ public class RegionCommand implements CommandExecutor {
                 }
             }
             case "delete" -> {
-                if (!player.hasPermission("sao.region.delete")) {
+                if (!player.hasPermission(".region.delete")) {
                     player.sendMessage(Messages.getRegion("no-permission"));
                     return true;
                 }

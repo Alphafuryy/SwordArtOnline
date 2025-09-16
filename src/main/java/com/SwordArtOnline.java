@@ -1,10 +1,9 @@
 package com;
 
-import com.Abilitys.AvalancheAbility;
-import com.Abilitys.DoubleCleaveAbility;
 import com.commands.SpawnCommand;
 import com.commands.RegionCommand;
 import com.commands.SkillCommand;
+
 import com.listeners.TeleportListener;
 import com.listeners.RegionListener;
 import com.managers.*;
@@ -21,9 +20,8 @@ public final class SwordArtOnline extends JavaPlugin {
     private MessagesManager messagesManager;
     private TaskManager taskManager;
     private TeleportListener teleportListener;
-
     private DoubleCleaveAbility doubleCleaveAbility;
-    private AvalancheAbility avalancheAbility;
+    private CursorManager cursorManager;
 
     private RegionManager regionManager;
     private RegionListener regionListener;
@@ -32,16 +30,12 @@ public final class SwordArtOnline extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        // Initialize abilities
-        doubleCleaveAbility = new DoubleCleaveAbility(this);
-        avalancheAbility = new AvalancheAbility(this);
-
         // Register managers, listeners, commands
         registerManagers();
         registerListeners();
         registerCommands();
 
-        getLogger().info("⚔️ SAO Plugin Enabled with Abilities!");
+        getLogger().info("⚔️  Plugin Enabled with Abilities!");
     }
 
     private void registerManagers() {
@@ -53,6 +47,7 @@ public final class SwordArtOnline extends JavaPlugin {
         spawnManager = new SpawnManager(this);
         taskManager = new TaskManager(this);
         taskManager.loadTasks();
+        cursorManager = new CursorManager(this);
 
         regionManager = new RegionManager(this);
     }
@@ -60,11 +55,15 @@ public final class SwordArtOnline extends JavaPlugin {
     private void registerListeners() {
         teleportListener = new TeleportListener(this);
         getServer().getPluginManager().registerEvents(teleportListener, this);
+        doubleCleaveAbility = new DoubleCleaveAbility(this);
+        getServer().getPluginManager().registerEvents(doubleCleaveAbility, this);
 
         regionListener = new RegionListener();
         getServer().getPluginManager().registerEvents(regionListener, this);
+        cursorManager = new CursorManager(this);
 
-        // Abilities already register themselves as listeners in constructors
+        getServer().getPluginManager().registerEvents(cursorManager, this);
+
     }
 
     private void registerCommands() {
@@ -75,8 +74,6 @@ public final class SwordArtOnline extends JavaPlugin {
         RegionCommand regionCommand = new RegionCommand(regionManager, regionListener);
         getCommand("region").setExecutor(regionCommand);
         getCommand("region").setTabCompleter(new RegionTabCompleter(this));
-
-        // Skill command for metadata-based abilities
         SkillCommand skillCommand = new SkillCommand();
         getCommand("skill").setExecutor(skillCommand);
     }
@@ -113,11 +110,5 @@ public final class SwordArtOnline extends JavaPlugin {
         return regionListener;
     }
 
-    public DoubleCleaveAbility getDoubleCleaveAbility() {
-        return doubleCleaveAbility;
-    }
 
-    public AvalancheAbility getAvalancheAbility() {
-        return avalancheAbility;
-    }
 }

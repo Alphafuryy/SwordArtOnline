@@ -10,6 +10,9 @@ description: >
 
 # Commands
 commands:
+  tab:
+    description: Manage tab list system
+    usage: /tab [view|refresh|debug]
   spawn:
     description: Teleport to nearest spawn or manage spawns
     usage: /spawn [set|delete|edit]

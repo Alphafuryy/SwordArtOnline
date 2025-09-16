@@ -1,4 +1,4 @@
-package com.Abilitys;
+package com;
 
 import com.commands.SkillCommand;
 import org.bukkit.*;
@@ -69,7 +69,7 @@ public class DoubleCleaveAbility implements Listener {
 
 
     private void executeDoubleCleave(Player player, double baseDamage) {
-        // SAO Skill Activation Effects
+        //  Skill Activation Effects
         playActivationEffects(player);
 
         // Calculate enhanced damage
@@ -78,7 +78,7 @@ public class DoubleCleaveAbility implements Listener {
         // First cleave (right side)
         performCleave(player, enhancedDamage, 1, 0);
 
-        // Second cleave (left side) with SAO combo timing
+        // Second cleave (left side) with  combo timing
     }
 
     private void performCleave(Player player, double damage, int direction, int delayTicks) {
@@ -89,7 +89,7 @@ public class DoubleCleaveAbility implements Listener {
         // Calculate perpendicular direction for the cleave
         Vector perpendicular = new Vector(-forward.getZ(), 0, forward.getX()).normalize().multiply(direction);
 
-        // SAO Skill Visuals and Sound
+        //  Skill Visuals and Sound
         if (delayTicks == 0) {
             createSwordArc(player, loc, forward, perpendicular);
             playSwordSkillSounds(loc);
@@ -133,7 +133,7 @@ public class DoubleCleaveAbility implements Listener {
         // Apply damage
         target.damage(damage, player);
 
-        // SAO-style knockback (slightly upward)
+        // -style knockback (slightly upward)
         Vector kb = direction.multiply(CLEAVE_KNOCKBACK).setY(0.3);
         target.setVelocity(kb);
 
@@ -141,17 +141,17 @@ public class DoubleCleaveAbility implements Listener {
         Location hitLoc = target.getLocation().add(0, 1, 0);
         World world = target.getWorld();
 
-        // SAO hit particles - using GLOW and ELECTRIC_SPARK instead of REDSTONE
+        //  hit particles - using GLOW and ELECTRIC_SPARK instead of REDSTONE
         world.spawnParticle(Particle.GLOW, hitLoc, 20, 0.3, 0.3, 0.3, 0.1);
         world.spawnParticle(Particle.ELECTRIC_SPARK, hitLoc, 12, 0.2, 0.2, 0.2, 0.1);
         world.spawnParticle(Particle.CRIT, hitLoc, 8, 0.2, 0.2, 0.2, 0.5);
 
-        // SAO hit sound
+        //  hit sound
         world.playSound(hitLoc, Sound.ENTITY_PLAYER_ATTACK_CRIT, 0.9f, 1.5f);
         world.playSound(hitLoc, Sound.BLOCK_AMETHYST_BLOCK_HIT, 0.7f, 1.7f);
         world.playSound(hitLoc, Sound.ITEM_TRIDENT_HIT, 0.5f, 1.3f);
 
-        // SAO damage number effect
+        //  damage number effect
         createDamageNumber(target, damage);
     }
 
@@ -159,7 +159,7 @@ public class DoubleCleaveAbility implements Listener {
         World world = player.getWorld();
         Location effectLoc = center.clone().add(0, 1.2, 0);
 
-        // Sword arc particles - using GLOW and ELECTRIC_SPARK for SAO blue energy trail
+        // Sword arc particles - using GLOW and ELECTRIC_SPARK for  blue energy trail
         for (int i = 0; i < 24; i++) {
             double angle = i * Math.PI / 12;
             double radius = CLEAVE_RANGE * (0.5 + (i * 0.02));
@@ -169,7 +169,7 @@ public class DoubleCleaveAbility implements Listener {
 
             Location particleLoc = effectLoc.clone().add(point);
 
-            // SAO blue energy particles with variation
+            //  blue energy particles with variation
             if (i % 3 == 0) {
                 // Light blue effect
                 world.spawnParticle(Particle.GLOW, particleLoc, 3, 0.1, 0.1, 0.1, 0.05);
@@ -205,7 +205,7 @@ public class DoubleCleaveAbility implements Listener {
 
     private void playSwordSkillSounds(Location loc) {
         World world = loc.getWorld();
-        // SAO sword skill activation sounds - more immersive
+        //  sword skill activation sounds - more immersive
         world.playSound(loc, Sound.ITEM_TRIDENT_THUNDER, 1.2f, 1.8f);
         world.playSound(loc, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.5f, 0.4f);
         world.playSound(loc, Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 1.9f);
@@ -216,7 +216,7 @@ public class DoubleCleaveAbility implements Listener {
         Location loc = player.getLocation();
         World world = player.getWorld();
 
-        // SAO skill activation circle - using GLOW and ELECTRIC_SPARK for energy ring
+        //  skill activation circle - using GLOW and ELECTRIC_SPARK for energy ring
         for (int i = 0; i < 36; i++) {
             double angle = i * Math.PI / 18;
             double height = 0.1 + (i % 3) * 0.2;
@@ -239,16 +239,16 @@ public class DoubleCleaveAbility implements Listener {
             world.spawnParticle(Particle.GLOW, columnLoc, 3, 0.2, 0, 0.2, 0.1);
         }
 
-        // SAO skill name activation sounds
+        //  skill name activation sounds
         world.playSound(loc, Sound.BLOCK_BEACON_ACTIVATE, 1.5f, 1.7f);
         world.playSound(loc, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.2f, 1.2f);
         world.playSound(loc, Sound.ITEM_TRIDENT_RETURN, 1.0f, 1.9f);
         world.playSound(loc, Sound.ENTITY_PLAYER_LEVELUP, 0.8f, 1.5f);
 
-        // Player visual feedback with SAO-style title
+        // Player visual feedback with -style title
         player.sendActionBar(ChatColor.AQUA + "✦ Double Cleave activated! ✦");
 
-        // Apply brief speed boost for SAO skill feeling
+        // Apply brief speed boost for  skill feeling
         player.addPotionEffect(new org.bukkit.potion.PotionEffect(
                 org.bukkit.potion.PotionEffectType.SPEED, 40, 0, true, false, false));
     }
@@ -257,7 +257,7 @@ public class DoubleCleaveAbility implements Listener {
         Location loc = target.getLocation().add(0, 2.2, 0);
         World world = target.getWorld();
 
-        // SAO-style damage numbers with particle variation based on damage
+        // -style damage numbers with particle variation based on damage
         int damageValue = (int) damage;
 
         // Damage number particles (floating numbers)
