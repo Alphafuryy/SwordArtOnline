@@ -150,10 +150,11 @@ public class RegionManager {
     public Map<String, Object> getStructureTypeSettings(String typeName) {
         return structureTypes.get(typeName.toLowerCase());
     }
+
     private void loadRegionFromFile(File file) {
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         String regionName = cfg.getString("name");
-        String regionType = cfg.getString("type", "floor");
+        String regionType = cfg.getString("type", "region");
         String structureType = cfg.getString("structureType", null);
         String world = cfg.getString("world");
 
@@ -175,9 +176,14 @@ public class RegionManager {
         regions.put(regionName, region);
     }
 
-    public void saveRegion(Region region) {
+    public boolean saveRegion(Region region) {
         File folder = new File(plugin.getDataFolder(), "Regions");
         if (!folder.exists()) folder.mkdirs();
+
+        // Check if region already exists
+        if (regions.containsKey(region.getRegionName())) {
+            return false;
+        }
 
         File file = new File(folder, region.getRegionName() + ".yml");
         FileConfiguration cfg = new YamlConfiguration();
@@ -203,11 +209,12 @@ public class RegionManager {
 
         try {
             cfg.save(file);
+            regions.put(region.getRegionName(), region);
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-
-        regions.put(region.getRegionName(), region);
     }
 
     public Region getRegion(String name) {
@@ -235,10 +242,6 @@ public class RegionManager {
         return result;
     }
 
-    public Map<String, Region> getStructureRegions() {
-        return getRegionsByType("structure");
-    }
-
     public boolean deleteRegion(String name) {
         Region region = regions.remove(name);
         if (region != null) {
@@ -254,8 +257,7 @@ public class RegionManager {
             for (Map.Entry<String, Object> entry : newSettings.entrySet()) {
                 region.setSetting(entry.getKey(), entry.getValue());
             }
-            saveRegion(region);
-            return true;
+            return saveRegion(region);
         }
         return false;
     }
