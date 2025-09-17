@@ -286,7 +286,7 @@ class CursorDataManager {
         Map<UUID, PlayerCursorData> loadedData = new HashMap<>();
 
         if (!dataFile.exists()) {
-            plugin.saveResource("sao_cursor_data.yml", false);
+            plugin.saveResource("cursor_data.yml", false);
         }
 
         dataConfig = YamlConfiguration.loadConfiguration(dataFile);
