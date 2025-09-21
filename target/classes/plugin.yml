@@ -6,7 +6,7 @@ authors:
   - Katieey
 description: >
   Sword Art Online inspired Minecraft plugin.
-  Handles floors, spawns, teleportation, and advanced  mechanics.
+  Handles floors, spawns, teleportation, and advanced monster mechanics.
 
 # Commands
 commands:
@@ -17,45 +17,67 @@ commands:
     description: Teleport to nearest spawn or manage spawns
     usage: /spawn [set|delete|edit]
     aliases: [sp]
-    permission: .spawn.use
+    permission: sao.spawn.use
     permission-message: "&cYou do not have permission to use this command."
   skill:
-    description: Manage  floor regions
+    description: Manage SAO floor regions
     usage: /skill [wand|set <floor>]
-    permission: .region.use
+    permission: sao.region.use
     permission-message: "&cYou do not have permission to use this command."
   region:
-    description: Manage  floor regions
+    description: Manage SAO floor regions
     usage: /region [wand|set <floor>]
-    permission: .region.use
+    permission: sao.region.use
+    permission-message: "&cYou do not have permission to use this command."
+  monster:
+    description: Manage and spawn SAO monsters
+    usage: /monster [spawn|list|info|reload|help]
+    permission: sao.monster.use
     permission-message: "&cYou do not have permission to use this command."
 
 # Permissions
 permissions:
   # Spawn permissions
-  .spawn.use:
+  sao.spawn.use:
     description: Allows using /spawn to teleport to nearest spawn
     default: true
-  .spawn.set:
+  sao.spawn.set:
     description: Allows setting new spawns
     default: op
-  .spawn.delete:
+  sao.spawn.delete:
     description: Allows deleting spawns
     default: op
-  .spawn.edit:
+  sao.spawn.edit:
     description: Allows editing existing spawns
     default: op
-  .spawn.bypass.cooldown:
+  sao.spawn.bypass.cooldown:
     description: Allows bypassing teleport cooldowns
     default: op
 
   # Region permissions
-  .region.use:
+  sao.region.use:
     description: Allows using /region commands
     default: op
-  .region.wand:
+  sao.region.wand:
     description: Allows receiving the Region Wand
     default: op
-  .region.set:
+  sao.region.set:
     description: Allows setting regions for floors
+    default: op
+
+  # Monster permissions
+  sao.monster.use:
+    description: Allows using monster commands
+    default: op
+  sao.monster.spawn:
+    description: Allows spawning monsters
+    default: op
+  sao.monster.list:
+    description: Allows listing monsters
+    default: true
+  sao.monster.info:
+    description: Allows viewing monster info
+    default: true
+  sao.monster.reload:
+    description: Allows reloading monster configs
     default: op

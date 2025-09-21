@@ -1,0 +1,27 @@
+title: "&7Smithing Menu"
+size: 27
+
+filler:
+  material: LIGHT_GRAY_STAINED_GLASS_PANE
+  displayname: " "
+
+items:
+  smithing:
+    slot: 12
+    material: SMITHING_TABLE
+    displayname: "&8ꜱᴍɪᴛʜɪɴɢ"
+    lore: []
+
+  crafting:
+    slot: 16
+    material: CRAFTING_TABLE
+    displayname: "&6ᴄʀᴀꜰᴛɪɴɢ"
+    lore: []
+
+  info:
+    slot: 23
+    material: OAK_SIGN
+    displayname: "&8ℹ Info"
+    lore:
+      - "&aℹ You can upgrade your Weapon and"
+      - "&aℹ Craft new weapons to get stronger!"

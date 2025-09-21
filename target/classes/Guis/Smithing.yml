@@ -1,0 +1,15 @@
+title: "&7Smithing"
+size: 54
+
+filler:
+  material: LIGHT_GRAY_STAINED_GLASS_PANE
+  displayname: " "
+
+items:
+  smithing:
+    slot: 4
+    material: SMITHING_TABLE
+    displayname: "&8ꜱᴍɪᴛʜɪɴɢ"
+    lore: []
+
+air_slots: [10, 11, 19, 20, 22, 24, 28, 29]

@@ -37,6 +37,7 @@ public class TeleportListener implements Listener {
             return;
         }
 
+
         SpawnPoint nearest = plugin.getSpawnManager().getNearestSpawn(player.getLocation());
         if (nearest == null) {
             String noSpawn = cfg.getString("teleport-task.no-spawn", "&cNo spawn found!");

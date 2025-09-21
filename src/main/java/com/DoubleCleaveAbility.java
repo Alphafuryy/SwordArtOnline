@@ -30,41 +30,40 @@ public class DoubleCleaveAbility implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onPlayerAttack(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
-
-        Player player = (Player) event.getDamager();
-        if (!SkillCommand.hasMetadata(player, "DoubleCleave")) return;
-
-        UUID playerId = player.getUniqueId();
-        long now = System.currentTimeMillis();
-
-        // Check custom 5-second cooldown
-        if (lastActivation.containsKey(playerId)) {
-            long lastTime = lastActivation.get(playerId);
-            if (now - lastTime < 5000) { // 5000ms = 5 seconds
-                long remaining = (5000 - (now - lastTime)) / 1000;
-                player.sendActionBar(ChatColor.RED + "Double Cleave cooldown: " + remaining + "s");
-                return;
-            }
-        }
-
-        // Only count hits if attack cooldown > 0.9 (90% charged)
-        if (player.getAttackCooldown() < 0.9f) return;
-
-        int hits = hitCounters.getOrDefault(playerId, 0) + 1;
-
-        if (hits >= TRIGGER_HITS) {
-            hitCounters.put(playerId, 0);
-            lastActivation.put(playerId, now); // set cooldown timestamp
-            executeDoubleCleave(player, event.getDamage());
-            event.setDamage(event.getDamage() * 1.2); // Bonus damage on triggering hit
-        } else {
-            hitCounters.put(playerId, hits);
-            player.sendActionBar(ChatColor.BLUE + "Double Cleave: " + (TRIGGER_HITS - hits) + " hits remaining");
-        }
-    }
+//    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+//    public void onPlayerAttack(EntityDamageByEntityEvent event) {
+//        if (!(event.getDamager() instanceof Player)) return;
+//
+//        Player player = (Player) event.getDamager();
+//
+//        UUID playerId = player.getUniqueId();
+//        long now = System.currentTimeMillis();
+//
+//        // Check custom 5-second cooldown
+//        if (lastActivation.containsKey(playerId)) {
+//            long lastTime = lastActivation.get(playerId);
+//            if (now - lastTime < 5000) { // 5000ms = 5 seconds
+//                long remaining = (5000 - (now - lastTime)) / 1000;
+//                player.sendActionBar(ChatColor.RED + "Double Cleave cooldown: " + remaining + "s");
+//                return;
+//            }
+//        }
+//
+//        // Only count hits if attack cooldown > 0.9 (90% charged)
+//        if (player.getAttackCooldown() < 0.9f) return;
+//
+//        int hits = hitCounters.getOrDefault(playerId, 0) + 1;
+//
+//        if (hits >= TRIGGER_HITS) {
+//            hitCounters.put(playerId, 0);
+//            lastActivation.put(playerId, now); // set cooldown timestamp
+//            executeDoubleCleave(player, event.getDamage());
+//            event.setDamage(event.getDamage() * 1.2); // Bonus damage on triggering hit
+//        } else {
+//            hitCounters.put(playerId, hits);
+//            player.sendActionBar(ChatColor.BLUE + "Double Cleave: " + (TRIGGER_HITS - hits) + " hits remaining");
+//        }
+//    }
 
 
 

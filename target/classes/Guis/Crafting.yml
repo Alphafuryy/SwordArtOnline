@@ -1,0 +1,15 @@
+title: "&7Crafting"
+size: 54
+
+filler:
+  material: LIGHT_GRAY_STAINED_GLASS_PANE
+  displayname: " "
+
+items:
+  crafting:
+    slot: 4
+    material: CRAFTING_TABLE
+    displayname: "&6ᴄʀᴀꜰᴛɪɴɢ"
+    lore: []
+
+air_slots: [10, 11, 15, 16, 19, 20, 22, 24, 25, 28, 29, 33, 34]

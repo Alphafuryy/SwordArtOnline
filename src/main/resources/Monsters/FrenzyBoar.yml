@@ -1,0 +1,79 @@
+name: "Frenzy Boar"
+level: 1
+entity_type: "PIG"
+display_name: "&6Frenzy Boar"
+is_rare: false
+rare_chance: 0.05
+
+stats:
+  hp: 363
+  defence: 9
+  attack_damage: 12
+  attack_speed: 1.5
+  movement_speed: 0.25
+  knockback_resistance: 0.2
+
+combat:
+  attack_type: "BLUNT"
+  weaknesses:
+    - "SLASH"
+    - "FIRE"
+  immunities:
+    - "POISON"
+  special_abilities:
+    charge:
+      enabled: true
+      cooldown: 20
+      damage_multiplier: 1.5
+      range: 10
+      knockback: 1.2
+
+spawning:
+  biomes:
+    - "PLAINS"
+    - "FOREST"
+  min_light_level: 0
+  max_light_level: 7
+  min_y: 60
+  max_y: 80
+  group_min: 1
+  group_max: 3
+  weight: 15
+
+drops:
+  common:
+    EXP: 5
+    COL: 3
+    WEXP: 2
+  rare:
+    BOAR_HIDE: 0.35
+    RECKLESS_FANG: 0.15
+  quest:
+    RECKLESS_FANG: 1.0
+
+rare_variant:
+  enabled: true
+  name: "Rare Frenzy Boar"
+  display_name: "&dRare Frenzy Boar &6★"
+  level: 8
+  stats:
+    hp: 544
+    attack_damage: 18
+  drops:
+    EXP: 25
+    COL: 9
+    WEXP: 3
+  weight: 5
+
+visuals:
+  particle_effects:
+    idle: "SMOKE_NORMAL"
+    hit: "CRIT"
+    death: "LAVA"
+  size_multiplier: 1.2
+
+sounds:
+  idle: "entity.pig.ambient"
+  hurt: "entity.pig.hurt"
+  death: "entity.pig.death"
+  charge: "entity.ravager.roar"
