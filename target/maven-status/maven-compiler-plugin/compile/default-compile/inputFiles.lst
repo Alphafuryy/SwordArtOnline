@@ -32,6 +32,17 @@ C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\Spaw
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\StatsManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\StatusBarManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\TaskManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\AbstractSkill.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\DamageReductionListener.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\LeapIntoTheFutureAbility.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\LeapIntoTheFutureSkill.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\Skill.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\SkillActivationListener.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\SkillCategory.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\SkillSlot.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\SwordSkillCommand.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\SwordSkillManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\skills\WeaponRequirementManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\SwordArtOnline.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\ItemTabCompleter.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\RegionTabCompleter.java

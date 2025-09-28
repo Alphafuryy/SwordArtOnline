@@ -4,7 +4,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +14,8 @@ public class SmithingTask {
     private YamlConfiguration config;
 
     private static final Map<String, Integer> starLimits = new HashMap<>();
-    private static double priceMultiplierPerStar = 0.25; // default 25%
-    private static double buffRatePerStar = 0.10;        // default 10%
+    private static double priceMultiplierPerStar = 0.25; // default fallback
+    private static double buffRatePerStar = 0.10;        // default fallback
 
     public SmithingTask(Plugin plugin) {
         this.plugin = plugin;
@@ -30,31 +29,12 @@ public class SmithingTask {
         // smithing.yml inside /Tasks
         this.configFile = new File(taskFolder, "smithing.yml");
 
-        if (!configFile.exists()) {
-            createDefaultConfig();
-        }
-
-        this.config = YamlConfiguration.loadConfiguration(configFile);
-        loadConfigValues();
-    }
-
-    private void createDefaultConfig() {
-        try {
-            configFile.createNewFile();
-            YamlConfiguration defaultConfig = new YamlConfiguration();
-
-            defaultConfig.set("star_limits.normal", 3);
-            defaultConfig.set("star_limits.rare", 5);
-            defaultConfig.set("star_limits.unique", 7);
-            defaultConfig.set("star_limits.legendary", 10);
-
-            defaultConfig.set("price_multiplier_per_star", 0.25);
-            defaultConfig.set("buff_rate_per_star", 0.10);
-
-            defaultConfig.save(configFile);
-        } catch (IOException e) {
-            plugin.getLogger().severe("Failed to create smithing.yml!");
-            e.printStackTrace();
+        // Load config if it exists
+        if (configFile.exists()) {
+            this.config = YamlConfiguration.loadConfiguration(configFile);
+            loadConfigValues();
+        } else {
+            plugin.getLogger().warning("smithing.yml not found! Using default values.");
         }
     }
 
@@ -90,7 +70,11 @@ public class SmithingTask {
     }
 
     public void reload() {
-        this.config = YamlConfiguration.loadConfiguration(configFile);
-        loadConfigValues();
+        if (configFile.exists()) {
+            this.config = YamlConfiguration.loadConfiguration(configFile);
+            loadConfigValues();
+        } else {
+            plugin.getLogger().warning("smithing.yml not found! Cannot reload.");
+        }
     }
 }

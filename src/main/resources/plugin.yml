@@ -23,6 +23,11 @@ commands:
     aliases: [sp]
     permission: sao.spawn.use
     permission-message: "&cYou do not have permission to use this command."
+  swordskill:
+    description: Manage SAO floor regions
+    usage: /swordskill [wand|set <floor>]
+    permission: sao.region.use
+    permission-message: "&cYou do not have permission to use this command."
   skill:
     description: Manage SAO floor regions
     usage: /skill [wand|set <floor>]

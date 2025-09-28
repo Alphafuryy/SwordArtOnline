@@ -10,6 +10,7 @@ import com.listeners.guis.*;
 import com.listeners.skills.*;
 import com.listeners.npcs.SmithingEntityListener;
 import com.managers.*;
+import com.skills.*;
 import com.tabcompleters.*;
 import com.tasks.SmithingTask;
 import com.utils.*;
@@ -99,7 +100,11 @@ public final class SwordArtOnline extends JavaPlugin {
         messagesManager = new MessagesManager(this);
         messagesManager.loadMessages("spawn");
         messagesManager.loadMessages("region");
-
+        SwordSkillManager swordSkillManager = SwordSkillManager.getInstance();
+        swordSkillManager.registerSkill("leapintothefuture", new LeapIntoTheFutureSkill());
+        new SkillActivationListener();
+        getCommand("swordskill").setExecutor(new SwordSkillCommand());
+        getCommand("swordskill").setTabCompleter(new SwordSkillCommand());
         statsManager = new StatsManager(this);
         loreManager = new LoreManager(this, statsManager, null);
         itemManager = new ItemManager(this, null, statsManager);
@@ -122,6 +127,7 @@ public final class SwordArtOnline extends JavaPlugin {
     private void registerListeners() {
         teleportListener = new TeleportListener(this);
         getServer().getPluginManager().registerEvents(teleportListener, this);
+        getServer().getPluginManager().registerEvents(new DamageReductionListener(), this);
 
         craftingListener = new CraftingListener(this, itemManager, recipeManager, soundManager);
         getServer().getPluginManager().registerEvents(craftingListener, this);
@@ -191,7 +197,9 @@ public final class SwordArtOnline extends JavaPlugin {
     // === Getters ===
 
     public static SwordArtOnline getInstance() { return instance; }
-
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
     public SpawnManager getSpawnManager() { return spawnManager; }
     public FloorManager getFloorManager() { return floorManager; }
     public MessagesManager getMessagesManager() { return messagesManager; }
