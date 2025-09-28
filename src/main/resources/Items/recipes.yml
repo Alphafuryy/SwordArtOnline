@@ -1,0 +1,9 @@
+coarse_stone:
+  material: STONE_BUTTON
+  displayname: '&7ᴄᴏᴀʀsᴇ sᴛᴏɴᴇ'
+boar_hide:
+  material: LEATHER
+  displayname: '&x&6&3&0&8&0&8ʙᴏᴀʀ ʜɪᴅᴇ'
+pointed_stinger:
+  material: FLINT
+  displayname: '&fᴘᴏɪɴᴛᴇᴅ sᴛɪɴɢᴇʀ'

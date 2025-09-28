@@ -1,0 +1,5 @@
+bronze_rapier_recipe:
+  result: bronze_rapier
+  ingredients:
+    coarse_stone: 1
+    pointed_stinger: 1

@@ -1,0 +1,5 @@
+bronze_dagger_recipe:
+  result: bronze_dagger
+  ingredients:
+    coarse_stone: 7
+    boar_hide: 3

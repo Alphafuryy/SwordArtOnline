@@ -1,0 +1,5 @@
+bronze_lance_recipe:
+  result: bronze_lance
+  ingredients:
+    coarse_stone: 7
+    pointed_stinger: 3

@@ -1,0 +1,30 @@
+# sounds.yml
+
+crafting:
+  success:
+    sound: BLOCK_WOODEN_BUTTON_CLICK_ON
+    volume: 1.0
+    pitch: 1.0
+  fail:
+    sound: BLOCK_NOTE_BLOCK_BASS
+    volume: 1.0
+    pitch: 0.5
+  place:
+    sound: BLOCK_WOOD_PLACE
+    volume: 1.0
+    pitch: 1.0
+smithing:
+  success:
+    sound: ENTITY_IRON_GOLEM_REPAIR
+    volume: 1.0
+    pitch: 1.0
+
+  fail:
+    sound: BLOCK_ANVIL_PLACE
+    volume: 1.0
+    pitch: 0.8
+
+  place:
+    sound: BLOCK_METAL_PLACE
+    volume: 1.0
+    pitch: 1.0

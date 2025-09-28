@@ -21,18 +21,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-// Main class to manage the  cursor system
 public class CursorManager implements Listener {
 
     private final JavaPlugin plugin;
     private final CursorDataManager dataManager;
-    private final CursorTeamManager teamManager;
+    private final CursorConfigManager configManager;
+    private CursorTeamManager teamManager;
     private final Map<UUID, PlayerCursorData> playerData = new HashMap<>();
 
     public CursorManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.dataManager = new CursorDataManager(plugin);
-        this.teamManager = new CursorTeamManager();
+        this.configManager = new CursorConfigManager(plugin);
+
+        // Load config FIRST
+        configManager.loadConfig();
+
+        // THEN initialize team manager
+        this.teamManager = new CursorTeamManager(configManager);
 
         loadData();
         startDecayTask();
@@ -42,7 +48,6 @@ public class CursorManager implements Listener {
         Map<UUID, PlayerCursorData> loadedData = dataManager.loadData();
         playerData.putAll(loadedData);
 
-        // Apply colors to online players
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerCursorData data = playerData.get(player.getUniqueId());
             if (data != null) {
@@ -62,23 +67,24 @@ public class CursorManager implements Listener {
     private void startDecayTask() {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             long currentTime = System.currentTimeMillis();
+            int decayAmount = configManager.getDecayPerMinute();
+
             for (Player player : Bukkit.getOnlinePlayers()) {
                 PlayerCursorData data = playerData.get(player.getUniqueId());
                 if (data != null && data.color != CursorColor.GREEN) {
-                    // Criminal points decay over time (1 point per minute)
                     if (currentTime - data.lastAttackTime > 60000) {
-                        data.criminalPoints = Math.max(0, data.criminalPoints - 1);
+                        data.criminalPoints = Math.max(0, data.criminalPoints - decayAmount);
                         data.lastAttackTime = currentTime;
 
                         if (data.criminalPoints == 0) {
                             setCursorColor(player, CursorColor.GREEN);
-                        } else if (data.criminalPoints < 5) {
+                        } else if (data.criminalPoints < configManager.getOrangeThreshold()) {
                             setCursorColor(player, CursorColor.ORANGE);
                         }
                     }
                 }
             }
-        }, 1200L, 1200L); // Run every minute
+        }, 1200L, 1200L);
     }
 
     @EventHandler
@@ -114,14 +120,12 @@ public class CursorManager implements Listener {
             playerData.put(attacker.getUniqueId(), data);
         }
 
-        // Increase criminal points
-        data.criminalPoints += 2;
+        data.criminalPoints += configManager.getAttackPoints();
         data.lastAttackTime = System.currentTimeMillis();
 
-        // Update cursor color based on criminal points
-        if (data.criminalPoints >= 10) {
+        if (data.criminalPoints >= configManager.getRedThreshold()) {
             setCursorColor(attacker, CursorColor.RED);
-        } else if (data.criminalPoints >= 3) {
+        } else if (data.criminalPoints >= configManager.getOrangeThreshold()) {
             setCursorColor(attacker, CursorColor.ORANGE);
         }
     }
@@ -138,8 +142,7 @@ public class CursorManager implements Listener {
                 playerData.put(killer.getUniqueId(), data);
             }
 
-            // Significant increase for killing
-            data.criminalPoints += 5;
+            data.criminalPoints += configManager.getKillPoints();
             data.lastAttackTime = System.currentTimeMillis();
 
             setCursorColor(killer, CursorColor.RED);
@@ -164,13 +167,25 @@ public class CursorManager implements Listener {
         return data != null ? data.criminalPoints : 0;
     }
 
+    public void reloadConfig() {
+        configManager.loadConfig();
+        teamManager.reloadConfig(configManager);
+
+        // Update all online players with new formats
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PlayerCursorData data = playerData.get(player.getUniqueId());
+            if (data != null) {
+                teamManager.applyCursorColor(player, data.color);
+            }
+        }
+    }
+
     public void onDisable() {
         saveData();
         teamManager.cleanupTeams();
     }
 }
 
-// Data class for player cursor information
 class PlayerCursorData {
     public CursorColor color;
     public int criminalPoints;
@@ -183,49 +198,56 @@ class PlayerCursorData {
     }
 }
 
-// Enum for cursor colors
 enum CursorColor {
-    GREEN(ChatColor.GREEN, "Green"),
-    ORANGE(ChatColor.GOLD, "Orange"),
-    RED(ChatColor.RED, "Red");
+    GREEN("Green"),
+    ORANGE("Orange"),
+    RED("Red");
 
-    public final ChatColor chatColor;
     public final String teamName;
 
-    CursorColor(ChatColor chatColor, String teamName) {
-        this.chatColor = chatColor;
+    CursorColor(String teamName) {
         this.teamName = teamName;
     }
 }
 
-// Manager class for handling cursor teams
 class CursorTeamManager {
+    private CursorConfigManager configManager;
     private Team greenTeam;
     private Team orangeTeam;
     private Team redTeam;
 
-    public CursorTeamManager() {
-        setupTeams();
+    public CursorTeamManager(CursorConfigManager configManager) {
+        this.configManager = configManager;
+        // Don't setup teams here, wait until config is definitely loaded
     }
 
     private void setupTeams() {
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-
-        // Clean up any existing teams
         removeExistingTeams(scoreboard);
 
-        // Create new teams
+        // Add null check for config
+        if (configManager == null || !configManager.useTeams()) return;
+
         greenTeam = scoreboard.registerNewTeam(CursorColor.GREEN.teamName);
-        greenTeam.setColor(CursorColor.GREEN.chatColor);
-        greenTeam.setPrefix(CursorColor.GREEN.chatColor.toString());
-
         orangeTeam = scoreboard.registerNewTeam(CursorColor.ORANGE.teamName);
-        orangeTeam.setColor(CursorColor.ORANGE.chatColor);
-        orangeTeam.setPrefix(CursorColor.ORANGE.chatColor.toString());
-
         redTeam = scoreboard.registerNewTeam(CursorColor.RED.teamName);
-        redTeam.setColor(CursorColor.RED.chatColor);
-        redTeam.setPrefix(CursorColor.RED.chatColor.toString());
+
+        updateTeamFormats();
+    }
+
+    private void updateTeamFormats() {
+        if (greenTeam != null) {
+            greenTeam.setPrefix(ChatColor.translateAlternateColorCodes('&',
+                    configManager.getFormat(CursorColor.GREEN).replace("%player%", "")));
+        }
+        if (orangeTeam != null) {
+            orangeTeam.setPrefix(ChatColor.translateAlternateColorCodes('&',
+                    configManager.getFormat(CursorColor.ORANGE).replace("%player%", "")));
+        }
+        if (redTeam != null) {
+            redTeam.setPrefix(ChatColor.translateAlternateColorCodes('&',
+                    configManager.getFormat(CursorColor.RED).replace("%player%", "")));
+        }
     }
 
     private void removeExistingTeams(Scoreboard scoreboard) {
@@ -238,31 +260,50 @@ class CursorTeamManager {
     }
 
     public void applyCursorColor(Player player, CursorColor color) {
-        // Remove from all teams first
-        removeFromAllTeams(player);
-
-        // Add to appropriate team
-        switch (color) {
-            case GREEN:
-                greenTeam.addEntry(player.getName());
-                break;
-            case ORANGE:
-                orangeTeam.addEntry(player.getName());
-                break;
-            case RED:
-                redTeam.addEntry(player.getName());
-                break;
+        // Lazy initialization - setup teams if not already done
+        if (greenTeam == null && orangeTeam == null && redTeam == null) {
+            setupTeams();
         }
 
-        // Update tab list and display name
-        player.setPlayerListName(color.chatColor + player.getName());
-        player.setDisplayName(color.chatColor + player.getName());
+        removeFromAllTeams(player);
+
+        if (configManager != null && configManager.useTeams()) {
+            switch (color) {
+                case GREEN:
+                    if (greenTeam != null) greenTeam.addEntry(player.getName());
+                    break;
+                case ORANGE:
+                    if (orangeTeam != null) orangeTeam.addEntry(player.getName());
+                    break;
+                case RED:
+                    if (redTeam != null) redTeam.addEntry(player.getName());
+                    break;
+            }
+        }
+
+        // Update display names based on config
+        if (configManager != null && configManager.updateTabList()) {
+            String format = configManager.getFormat(color);
+            String displayName = format.replace("%player%", player.getName());
+            player.setPlayerListName(ChatColor.translateAlternateColorCodes('&', displayName));
+        }
+
+        if (configManager != null && configManager.updateDisplayName()) {
+            String format = configManager.getFormat(color);
+            String displayName = format.replace("%player%", player.getName());
+            player.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
+        }
     }
 
     private void removeFromAllTeams(Player player) {
-        greenTeam.removeEntry(player.getName());
-        orangeTeam.removeEntry(player.getName());
-        redTeam.removeEntry(player.getName());
+        if (greenTeam != null) greenTeam.removeEntry(player.getName());
+        if (orangeTeam != null) orangeTeam.removeEntry(player.getName());
+        if (redTeam != null) redTeam.removeEntry(player.getName());
+    }
+
+    public void reloadConfig(CursorConfigManager newConfigManager) {
+        this.configManager = newConfigManager;
+        setupTeams(); // Re-setup teams with new config
     }
 
     public void cleanupTeams() {
@@ -271,7 +312,152 @@ class CursorTeamManager {
     }
 }
 
-// Manager class for handling data persistence
+class CursorConfigManager {
+    private final JavaPlugin plugin;
+    private FileConfiguration config;
+    private final File configFile;
+
+    public CursorConfigManager(JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.configFile = new File(plugin.getDataFolder(), "cursor.yml");
+    }
+
+    public void loadConfig() {
+        if (!configFile.exists()) {
+            createDefaultConfig();
+        }
+
+        config = YamlConfiguration.loadConfiguration(configFile);
+
+        // Verify config was loaded successfully
+        if (config == null) {
+            plugin.getLogger().severe("Failed to load cursor.yml configuration!");
+            // Create emergency default config
+            createEmergencyConfig();
+        }
+    }
+
+    private void createDefaultConfig() {
+        try {
+            plugin.getDataFolder().mkdirs();
+
+            // Create default configuration content
+            YamlConfiguration defaultConfig = new YamlConfiguration();
+
+            // Formats section
+            defaultConfig.set("formats.GREEN", "&a● %player%");
+            defaultConfig.set("formats.ORANGE", "&6● %player%");
+            defaultConfig.set("formats.RED", "&c● %player%");
+
+            // Thresholds section
+            defaultConfig.set("thresholds.ORANGE", 3);
+            defaultConfig.set("thresholds.RED", 10);
+
+            // Points section
+            defaultConfig.set("points.attack", 2);
+            defaultConfig.set("points.kill", 5);
+            defaultConfig.set("points.decay_per_minute", 1);
+
+            // Settings section
+            defaultConfig.set("settings.update_tab_list", true);
+            defaultConfig.set("settings.update_display_name", true);
+            defaultConfig.set("settings.use_teams", true);
+
+            // Add comments and documentation
+            defaultConfig.options().header(
+                    "Cursor Display System Configuration\n" +
+                            "Customize how player names appear based on their criminal activity level\n\n" +
+                            "Formats: Use & for color codes and %player% for player name placeholder\n" +
+                            "Thresholds: Points needed for each color level\n" +
+                            "Points: How points are gained/lost\n" +
+                            "Settings: Display behavior options\n"
+            );
+
+            // Save the default config
+            defaultConfig.save(configFile);
+            plugin.getLogger().info("Created default cursor.yml configuration file");
+
+        } catch (IOException e) {
+            plugin.getLogger().severe("Could not create default cursor.yml: " + e.getMessage());
+            createEmergencyConfig();
+        }
+    }
+
+    private void createEmergencyConfig() {
+        // Create a basic in-memory config as fallback
+        config = new YamlConfiguration();
+        config.set("formats.GREEN", "&a● %player%");
+        config.set("formats.ORANGE", "&6● %player%");
+        config.set("formats.RED", "&c● %player%");
+        config.set("thresholds.ORANGE", 3);
+        config.set("thresholds.RED", 10);
+        config.set("points.attack", 2);
+        config.set("points.kill", 5);
+        config.set("points.decay_per_minute", 1);
+        config.set("settings.update_tab_list", true);
+        config.set("settings.update_display_name", true);
+        config.set("settings.use_teams", true);
+
+        plugin.getLogger().warning("Using emergency in-memory configuration");
+    }
+
+    public String getFormat(CursorColor color) {
+        if (config == null) {
+            // Fallback defaults
+            switch (color) {
+                case GREEN: return "&a● %player%";
+                case ORANGE: return "&6● %player%";
+                case RED: return "&c● %player%";
+                default: return "&f%player%";
+            }
+        }
+
+        String format = config.getString("formats." + color.name());
+        if (format == null) {
+            // Return default format if not found in config
+            switch (color) {
+                case GREEN: return "&a● %player%";
+                case ORANGE: return "&6● %player%";
+                case RED: return "&c● %player%";
+                default: return "&f%player%";
+            }
+        }
+        return format;
+    }
+
+    public int getOrangeThreshold() {
+        return config != null ? config.getInt("thresholds.ORANGE", 3) : 3;
+    }
+
+    public int getRedThreshold() {
+        return config != null ? config.getInt("thresholds.RED", 10) : 10;
+    }
+
+    public int getAttackPoints() {
+        return config != null ? config.getInt("points.attack", 2) : 2;
+    }
+
+    public int getKillPoints() {
+        return config != null ? config.getInt("points.kill", 5) : 5;
+    }
+
+    public int getDecayPerMinute() {
+        return config != null ? config.getInt("points.decay_per_minute", 1) : 1;
+    }
+
+    public boolean updateTabList() {
+        return config != null && config.getBoolean("settings.update_tab_list", true);
+    }
+
+    public boolean updateDisplayName() {
+        return config != null && config.getBoolean("settings.update_display_name", true);
+    }
+
+    public boolean useTeams() {
+        return config != null && config.getBoolean("settings.use_teams", true);
+    }
+}
+
 class CursorDataManager {
     private final JavaPlugin plugin;
     private final File dataFile;
@@ -286,18 +472,21 @@ class CursorDataManager {
         Map<UUID, PlayerCursorData> loadedData = new HashMap<>();
 
         if (!dataFile.exists()) {
-            plugin.saveResource("cursor_data.yml", false);
+            return loadedData;
         }
 
         dataConfig = YamlConfiguration.loadConfiguration(dataFile);
 
         if (dataConfig.contains("players")) {
             for (String key : dataConfig.getConfigurationSection("players").getKeys(false)) {
-                UUID uuid = UUID.fromString(key);
-                CursorColor color = CursorColor.valueOf(dataConfig.getString("players." + key + ".color"));
-                int points = dataConfig.getInt("players." + key + ".criminalPoints");
-
-                loadedData.put(uuid, new PlayerCursorData(color, points));
+                try {
+                    UUID uuid = UUID.fromString(key);
+                    CursorColor color = CursorColor.valueOf(dataConfig.getString("players." + key + ".color"));
+                    int points = dataConfig.getInt("players." + key + ".criminalPoints");
+                    loadedData.put(uuid, new PlayerCursorData(color, points));
+                } catch (IllegalArgumentException e) {
+                    plugin.getLogger().warning("Invalid data for player: " + key);
+                }
             }
         }
 
@@ -305,18 +494,18 @@ class CursorDataManager {
     }
 
     public void saveData(Map<UUID, PlayerCursorData> playerData) {
-        dataConfig.set("players", null);
+        dataConfig = new YamlConfiguration();
 
-        for (UUID uuid : playerData.keySet()) {
-            PlayerCursorData data = playerData.get(uuid);
-            dataConfig.set("players." + uuid.toString() + ".color", data.color.toString());
-            dataConfig.set("players." + uuid.toString() + ".criminalPoints", data.criminalPoints);
+        for (Map.Entry<UUID, PlayerCursorData> entry : playerData.entrySet()) {
+            String path = "players." + entry.getKey().toString();
+            dataConfig.set(path + ".color", entry.getValue().color.toString());
+            dataConfig.set(path + ".criminalPoints", entry.getValue().criminalPoints);
         }
 
         try {
             dataConfig.save(dataFile);
         } catch (IOException e) {
-            plugin.getLogger().warning("Could not save  cursor data: " + e.getMessage());
+            plugin.getLogger().warning("Could not save cursor data: " + e.getMessage());
         }
     }
 }

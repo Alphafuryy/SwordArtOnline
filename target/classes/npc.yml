@@ -1,13 +1,13 @@
 smithing:
-name: "&8Smithing"
-dialogues:
-  - "&7Lookin' for somethin', kiddo?"
-  - "&7That blade's seen better days. Let the master take a look."
-  - "&7*Hits anvil sharply* Good steel needs a good arm. You got both?"
-  - "&7I don't just make weapons, I forge legends. What'll it be?"
-  - "&7Careful! That edge'll bite you quicker than a cave spider if you're not showin' respect."
-sounds:
-  - "BLOCK_ANVIL_USE"
-  - "ENTITY_VILLAGER_TRADE"
-  - "ITEM_ARMOR_EQUIP_IRON"
-  - "BLOCK_FURNACE_FIRE_CRACKLE"
+  name: "&7Smithing"
+  dialogues:
+    - "&7[Smithing] Lookin' for somethin', kiddo?"
+    - "&7[Smithing] That blade's seen better days. Let the master take a look."
+    - "&7[Smithing] *Hits anvil sharply* Good steel needs a good arm. You got both?"
+    - "&7[Smithing] I don't just make weapons, I forge legends. What'll it be?"
+    - "&7[Smithing] Careful! That edge'll bite you quicker than a cave spider if you're not showin' respect."
+  sounds:
+    - "BLOCK_ANVIL_USE"
+    - "ENTITY_VILLAGER_TRADE"
+    - "ITEM_ARMOR_EQUIP_IRON"
+    - "BLOCK_FURNACE_FIRE_CRACKLE"

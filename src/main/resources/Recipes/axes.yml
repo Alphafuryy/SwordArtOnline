@@ -1,0 +1,5 @@
+bronze_axe_recipe:
+  result: bronze_axe
+  ingredients:
+    coarse_stone: 7
+    boar_hide: 3

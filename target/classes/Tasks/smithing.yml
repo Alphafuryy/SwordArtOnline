@@ -1,0 +1,36 @@
+# ===================================================
+# Smithing Configuration
+# ===================================================
+
+# Maximum star levels per item rarity.
+# You can add new rarities here. Key = rarity name, Value = max stars.
+# Dont forget to update lore.yml tho
+star_limits:
+  normal: 3
+  rare: 5
+  unique: 7
+  legendary: 10
+
+# ===================================================
+# Material Cost Scaling
+# ===================================================
+# How much the material requirement increases per star.
+# Example: 0.25 = 25% increase per star.
+price_multiplier_per_star: 0.50
+
+# ===================================================
+# Stat Buff Scaling
+# ===================================================
+# How much item stats increase per star.
+# Example: 0.10 = 10% increase per star.
+buff_rate_per_star: 0.5
+
+# ===================================================
+# Example Notes:
+# star_limits:
+#   normal: 3      -> max 3 stars for normal items
+#   rare: 5        -> max 5 stars for rare items
+# price_multiplier_per_star: 0.25
+#   -> If an item normally requires 4 iron, at star 1 it will need 4 * (1+0.25*1) = 5 iron
+# buff_rate_per_star: 0.10
+#   -> If an item has 10 attack damage, at star 2 it will be 10 * (1 + 0.10*2) = 12 attack damage

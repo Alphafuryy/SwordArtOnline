@@ -1,0 +1,4 @@
+small_buckler_recipe:
+  result: small_buckler
+  ingredients:
+    coarse_stone: 1

@@ -1,0 +1,40 @@
+Stats:
+  attack_damage:
+    attribute: ATTACK_DAMAGE
+    upgradeable: true
+  attack_speed:
+    attribute: ATTACK_SPEED
+    upgradeable: false
+  armor:
+    attribute: ARMOR
+    upgradeable: true
+  armor_toughness:
+    attribute: ARMOR_TOUGHNESS
+    upgradeable: true
+  max_health:
+    attribute: MAX_HEALTH
+    upgradeable: true
+  movement_speed:
+    attribute: MOVEMENT_SPEED
+    upgradeable: true
+  knockback_resistance:
+    attribute: KNOCKBACK_RESISTANCE
+    upgradeable: true
+  range:
+    attribute: ENTITY_INTERACTION_RANGE
+    upgradeable: false
+  luck:
+    attribute: LUCK
+    upgradeable: false
+  follow_range:
+    attribute: FOLLOW_RANGE
+    upgradeable: false
+  attack_knockback:
+    attribute: ATTACK_KNOCKBACK
+    upgradeable: false
+  jump_strength:
+    attribute: JUMP_STRENGTH
+    upgradeable: false
+  flying_speed:
+    attribute: FLYING_SPEED
+    upgradeable: false

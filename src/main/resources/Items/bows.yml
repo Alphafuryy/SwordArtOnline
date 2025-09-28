@@ -1,0 +1,14 @@
+bronze_bow:
+  name: '&6ʙʀᴏɴᴢᴇ ʙᴏᴡ'
+  material: BOW
+  rarity: Unique
+  enchants:
+  - POWER 4
+  flags:
+  - HIDE_ATTRIBUTES
+  - HIDE_ENCHANTS
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  - HIDE_DYE

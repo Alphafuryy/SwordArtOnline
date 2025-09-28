@@ -7,19 +7,19 @@ filler:
 
 items:
   smithing:
-    slot: 12
+    slot: 11
     material: SMITHING_TABLE
     displayname: "&8ꜱᴍɪᴛʜɪɴɢ"
     lore: []
 
   crafting:
-    slot: 16
+    slot: 15
     material: CRAFTING_TABLE
     displayname: "&6ᴄʀᴀꜰᴛɪɴɢ"
     lore: []
 
   info:
-    slot: 23
+    slot: 22
     material: OAK_SIGN
     displayname: "&8ℹ Info"
     lore:

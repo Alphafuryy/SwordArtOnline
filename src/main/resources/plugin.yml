@@ -10,6 +10,10 @@ description: >
 
 # Commands
 commands:
+  item:
+    description: Manage custom items
+    usage: /item give <id> [player] [amount]
+    permission: sao.item.*
   tab:
     description: Manage tab list system
     usage: /tab [view|refresh|debug]

@@ -1,0 +1,16 @@
+bronze_sword:
+  name: '&6ʙʀᴏɴᴢᴇ ꜱᴡᴏʀᴅ'
+  material: IRON_SWORD
+  rarity: Unique
+  stats:
+    HAND:
+      attack_damage: 14.0
+      attack_speed: -2.4
+  flags:
+  - HIDE_ATTRIBUTES
+  - HIDE_ENCHANTS
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  - HIDE_DYE

@@ -1,50 +1,56 @@
 package com;
 
-import com.commands.SpawnCommand;
-import com.commands.RegionCommand;
-import com.commands.SkillCommand;
+import com.commands.*;
+import com.google.common.math.Stats;
 import com.guis.CraftingGUI;
 import com.guis.SmithingGUI;
 import com.guis.SmithingMenuGUI;
-import com.listeners.StatusBarListener;
-import com.listeners.TeleportListener;
-import com.listeners.RegionListener;
-import com.listeners.guis.SmithingMenuGUIListener;
-import com.listeners.skills.AcrobaticsSkillListener;
-import com.listeners.skills.CarpentrySkillListener;
-import com.listeners.skills.PickingSkillListener;
-import com.listeners.skills.SneakingSkillListener;
+import com.listeners.*;
+import com.listeners.guis.*;
+import com.listeners.skills.*;
 import com.listeners.npcs.SmithingEntityListener;
 import com.managers.*;
-import com.tabcompleters.RegionTabCompleter;
-import com.tabcompleters.SpawnTabCompleter;
-import com.utils.GUI;
-import com.utils.NPC;
-import com.utils.PlayerSkillData;
+import com.tabcompleters.*;
+import com.tasks.SmithingTask;
+import com.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SwordArtOnline extends JavaPlugin {
 
     private static SwordArtOnline instance;
 
+    // === Managers ===
     private SpawnManager spawnManager;
     private FloorManager floorManager;
     private MessagesManager messagesManager;
     private TaskManager taskManager;
-    private TeleportListener teleportListener;
-    private DoubleCleaveAbility doubleCleaveAbility;
     private CursorManager cursorManager;
     private RegionManager regionManager;
-    private RegionListener regionListener;
     private SkillManager skillManager;
-    private AcrobaticsSkillListener acrobaticsSkillListener;
+    private SoundManager soundManager;
+    private SmithingTask smithingTask;
+
+    private StatsManager statsManager;
     private StatusBarManager statusBarManager;
+    private LoreManager loreManager;
+    private ItemManager itemManager;
+    private RecipeManager recipeManager;
+
+    // === Listeners ===
+    private TeleportListener teleportListener;
+    private RegionListener regionListener;
+    private SmithingListener smithingListener;
+    private CraftingListener craftingListener;
+    private SmithingEntityListener smithingEntityListener;
+    private SmithingMenuGUIListener smithingMenuGUIListener;
     private StatusBarListener statusBarListener;
+    private AcrobaticsSkillListener acrobaticsSkillListener;
     private SneakingSkillListener sneakingSkillListener;
     private PickingSkillListener pickingSkillListener;
     private CarpentrySkillListener carpentrySkillListener;
-    private SmithingEntityListener smithingEntityListener;
-    private SmithingMenuGUIListener smithingMenuGUIListener;
+
+    // === Abilities ===
+    private DoubleCleaveAbility doubleCleaveAbility;
 
     @Override
     public void onEnable() {
@@ -54,15 +60,16 @@ public final class SwordArtOnline extends JavaPlugin {
         GUI.loadConfigs(this);
         NPC.loadNPCConfig(this);
 
-        // Register managers, listeners, commands
+        // Register systems
         registerManagers();
+        registerTasks();
         registerListeners();
         registerCommands();
 
-        // Load all data
+        // Load data
         loadAllData();
 
-        // Start the status bar system
+        // Start systems
         if (statusBarManager != null) {
             statusBarManager.start();
         }
@@ -72,10 +79,10 @@ public final class SwordArtOnline extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Save all data when plugin disables
+        // Save data
         saveAllData();
 
-        // Clear status bar manager
+        // Stop systems
         if (statusBarManager != null) {
             statusBarManager.stop();
         }
@@ -83,32 +90,47 @@ public final class SwordArtOnline extends JavaPlugin {
         getLogger().info("SwordArtOnline disabled.");
     }
 
+    // === Registration ===
+    private void registerTasks() {
+        smithingTask = new SmithingTask(this);
+
+    }
     private void registerManagers() {
         messagesManager = new MessagesManager(this);
         messagesManager.loadMessages("spawn");
         messagesManager.loadMessages("region");
 
+        statsManager = new StatsManager(this);
+        loreManager = new LoreManager(this, statsManager, null);
+        itemManager = new ItemManager(this, null, statsManager);
+        recipeManager = new RecipeManager(this, itemManager);
         floorManager = new FloorManager(this);
         spawnManager = new SpawnManager(this);
+
         taskManager = new TaskManager(this);
         taskManager.loadTasks();
+
         cursorManager = new CursorManager(this);
-
         regionManager = new RegionManager(this);
-
-        // Initialize SkillManager
         skillManager = new SkillManager(this.getDataFolder());
-
-        // Initialize StatusBarManager
+        soundManager = new SoundManager(this);
         statusBarManager = new StatusBarManager(this);
+        loreManager.setItemManager(itemManager);
+        itemManager.setLoreManager(loreManager);
     }
 
     private void registerListeners() {
         teleportListener = new TeleportListener(this);
         getServer().getPluginManager().registerEvents(teleportListener, this);
 
+        craftingListener = new CraftingListener(this, itemManager, recipeManager, soundManager);
+        getServer().getPluginManager().registerEvents(craftingListener, this);
+
         doubleCleaveAbility = new DoubleCleaveAbility(this);
         getServer().getPluginManager().registerEvents(doubleCleaveAbility, this);
+
+        smithingListener = new SmithingListener(this, itemManager, recipeManager, soundManager, loreManager);
+        getServer().getPluginManager().registerEvents(smithingListener, this);
 
         regionListener = new RegionListener();
         getServer().getPluginManager().registerEvents(regionListener, this);
@@ -118,19 +140,22 @@ public final class SwordArtOnline extends JavaPlugin {
 
         carpentrySkillListener = new CarpentrySkillListener(this, skillManager, 1000);
         getServer().getPluginManager().registerEvents(carpentrySkillListener, this);
+
         pickingSkillListener = new PickingSkillListener(this, skillManager);
         getServer().getPluginManager().registerEvents(pickingSkillListener, this);
+
         acrobaticsSkillListener = new AcrobaticsSkillListener(skillManager);
         getServer().getPluginManager().registerEvents(acrobaticsSkillListener, this);
+
         sneakingSkillListener = new SneakingSkillListener(skillManager);
         getServer().getPluginManager().registerEvents(sneakingSkillListener, this);
 
         statusBarListener = new StatusBarListener(statusBarManager);
         getServer().getPluginManager().registerEvents(statusBarListener, this);
 
-        // Register Smithing NPC listener
         smithingMenuGUIListener = new SmithingMenuGUIListener();
         getServer().getPluginManager().registerEvents(smithingMenuGUIListener, this);
+
         smithingEntityListener = new SmithingEntityListener();
         getServer().getPluginManager().registerEvents(smithingEntityListener, this);
     }
@@ -140,6 +165,9 @@ public final class SwordArtOnline extends JavaPlugin {
         getCommand("spawn").setExecutor(spawnCommand);
         getCommand("spawn").setTabCompleter(new SpawnTabCompleter(this));
 
+        getCommand("item").setExecutor(new ItemCommand(itemManager, recipeManager));
+        getCommand("item").setTabCompleter(new ItemTabCompleter(itemManager, recipeManager));
+
         RegionCommand regionCommand = new RegionCommand(regionManager, regionListener);
         getCommand("region").setExecutor(regionCommand);
         getCommand("region").setTabCompleter(new RegionTabCompleter(this));
@@ -147,6 +175,8 @@ public final class SwordArtOnline extends JavaPlugin {
         SkillCommand skillCommand = new SkillCommand(skillManager);
         getCommand("skill").setExecutor(skillCommand);
     }
+
+    // === Data Handling ===
 
     private void loadAllData() {
         skillManager.loadAllData();
@@ -158,9 +188,9 @@ public final class SwordArtOnline extends JavaPlugin {
         getLogger().info("All data saved successfully!");
     }
 
-    public static SwordArtOnline getInstance() {
-        return instance;
-    }
+    // === Getters ===
+
+    public static SwordArtOnline getInstance() { return instance; }
 
     public SpawnManager getSpawnManager() { return spawnManager; }
     public FloorManager getFloorManager() { return floorManager; }

@@ -1,0 +1,32 @@
+rarities:
+  Normal: "&x&B&5&B&5&B&5ɴ&x&9&C&9&C&9&Cᴏ&x&8&2&8&2&8&2ʀ&x&6&9&6&9&6&9ᴍ&x&4&F&4&F&4&Fᴀ&x&3&6&3&6&3&6ʟ"
+  Rare: "&x&5&A&A&5&B&5ʀ&x&5&2&9&2&A&1ᴀ&x&4&B&7&E&8&Cʀ&x&4&3&6&B&7&8ᴇ"
+  Unique: "&x&B&5&7&5&5&1ᴜ&x&B&4&7&9&5&9ɴ&x&B&3&7&D&6&2ɪ&x&B&2&8&0&6&Aq&x&B&1&8&4&7&3ᴜ&x&B&0&8&8&7&Bᴇ"
+  Legendary: "&x&B&5&A&5&5&1ʟ&x&B&4&A&6&5&7ᴇ&x&B&3&A&8&5&Cɢ&x&B&2&A&9&6&2ᴇ&x&B&1&A&B&6&7ɴ&x&A&F&A&C&6&Dᴅ&x&A&E&A&D&7&2ᴀ&x&A&D&A&F&7&8ʀ&x&A&C&B&0&7&Dʏ"
+
+stat-names:
+  attack_damage: "&8 ● Attack Damage &c%sign%%value%"
+  armor: "&8 ● Armor &e%sign%%value%"
+  attack_speed: "&8 ● Attack Speed &b%sign%%value%"
+  range: "&8 ● Range &a%sign%%value%"
+  armor_toughness: "&8 ● Armor Toughness &6%sign%%value%"
+  max_health: "&8 ● Max Health &c%sign%%value%"
+  movement_speed: "&8 ● Movement Speed &a%sign%%value%"
+  knockback_resistance: "&8 ● Knockback Resistance &e%sign%%value%"
+  luck: "&8 ● Luck &6%sign%%value%"
+  follow_range: "&8 ● Follow Range &b%sign%%value%"
+  attack_knockback: "&8 ● Attack Knockback &c%sign%%value%"
+  jump_strength: "&8 ● Jump Strength &a%sign%%value%"
+  flying_speed: "&8 ● Flying Speed &b%sign%%value%"
+
+stars:
+  1: "&7★"
+  2: "&7★★"
+  3: "&7★★★"
+  4: "&7★★★★"
+  5: "&7★★★★★"
+  6: "&e★★★★★★"
+  7: "&e★★★★★★★"
+  8: "&e★★★★★★★★"
+  9: "&6★★★★★★★★★"
+  10: "&6★★★★★★★★★★"

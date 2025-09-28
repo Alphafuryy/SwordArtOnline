@@ -1,0 +1,16 @@
+bronze_rapier:
+  name: '&6ʙʀᴏɴᴢᴇ ʀᴀᴘɪᴇʀ'
+  material: IRON_SWORD
+  rarity: Unique
+  stats:
+    HAND:
+      attack_damage: 13.0
+      attack_speed: -2.0
+  flags:
+  - HIDE_ATTRIBUTES
+  - HIDE_ENCHANTS
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  - HIDE_DYE

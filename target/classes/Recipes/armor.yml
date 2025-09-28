@@ -1,0 +1,23 @@
+bronze_helmet_recipe:
+  result: bronze_helmet
+  ingredients:
+    coarse_stone: 1
+    boar_hide: 1
+
+bronze_armor_recipe:
+  result: bronze_armor
+  ingredients:
+    coarse_stone: 1
+    boar_hide: 1
+
+bronze_greaves_recipe:
+  result: bronze_greaves
+  ingredients:
+    coarse_stone: 1
+    boar_hide: 1
+
+bronze_boots_recipe:
+  result: bronze_boots
+  ingredients:
+    coarse_stone: 1
+    boar_hide: 1

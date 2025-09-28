@@ -1,0 +1,5 @@
+bronze_bow_recipe:
+  result: bronze_bow
+  ingredients:
+    coarse_stone: 1
+    boar_hide: 1

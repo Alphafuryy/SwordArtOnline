@@ -1,0 +1,71 @@
+bronze_helmet:
+  name: '&6ʙʀᴏɴᴢᴇ ʜᴇʟᴍᴇᴛ'
+  material: IRON_HELMET
+  rarity: Unique
+  lore: []
+  stats:
+    HEAD:
+      armor: 16
+  enchants: []
+  flags:
+    - HIDE_ATTRIBUTES
+    - HIDE_ENCHANTS
+    - HIDE_UNBREAKABLE
+    - HIDE_DESTROYS
+    - HIDE_PLACED_ON
+    - HIDE_POTION_EFFECTS
+    - HIDE_DYE
+
+bronze_armor:
+  name: '&6ʙʀᴏɴᴢᴇ ᴀʀᴍᴏʀ'
+  material: IRON_CHESTPLATE
+  rarity: Unique
+  lore: []
+  stats:
+    CHEST:
+      armor: 16
+  enchants: []
+  flags:
+    - HIDE_ATTRIBUTES
+    - HIDE_ENCHANTS
+    - HIDE_UNBREAKABLE
+    - HIDE_DESTROYS
+    - HIDE_PLACED_ON
+    - HIDE_POTION_EFFECTS
+    - HIDE_DYE
+
+bronze_greaves:
+  name: '&6ʙʀᴏɴᴢᴇ ɢʀᴇᴀᴠᴇꜱ'
+  material: IRON_LEGGINGS
+  rarity: Unique
+  lore: []
+  stats:
+    LEGS:
+      armor: 16
+  enchants: []
+  flags:
+    - HIDE_ATTRIBUTES
+    - HIDE_ENCHANTS
+    - HIDE_UNBREAKABLE
+    - HIDE_DESTROYS
+    - HIDE_PLACED_ON
+    - HIDE_POTION_EFFECTS
+    - HIDE_DYE
+
+bronze_boots:
+  name: '&6ʙʀᴏɴᴢᴇ ʙᴏᴏᴛꜱ'
+  material: IRON_BOOTS
+  rarity: Unique
+  lore: []
+  stats:
+    FEET:
+      armor: 16
+  enchants: []
+  flags:
+    - HIDE_ATTRIBUTES
+    - HIDE_ENCHANTS
+    - HIDE_UNBREAKABLE
+    - HIDE_DESTROYS
+    - HIDE_PLACED_ON
+    - HIDE_POTION_EFFECTS
+    - HIDE_DYE

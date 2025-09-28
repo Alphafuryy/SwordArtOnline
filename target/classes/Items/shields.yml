@@ -1,0 +1,15 @@
+small_buckler:
+  name: '&bꜱᴍᴀʟʟ ʙᴜᴄᴋʟᴇʀ'
+  material: SHIELD
+  rarity: Unique
+  stats:
+    HAND:
+      armor: 2.0
+  flags:
+  - HIDE_ATTRIBUTES
+  - HIDE_ENCHANTS
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  - HIDE_DYE

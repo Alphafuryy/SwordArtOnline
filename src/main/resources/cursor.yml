@@ -1,0 +1,117 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║                  Cursor Display System Config                ║
+# ║         Customize how player names appear based on          ║
+# ║               their criminal activity level                 ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ────────────────────────────────────────────────────────────────
+# Display Formats
+# ────────────────────────────────────────────────────────────────
+# Customize how player names appear for each color level
+# Available placeholders: %player% (player's name)
+# Color codes: &0-&f, &k-&r (use & for color codes)
+formats:
+  # Green - Peaceful players (0 points)
+  GREEN: "&a● %player%"
+  # Orange - Minor criminals (3+ points)
+  ORANGE: "&6⚠ %player%"
+  # Red - Dangerous criminals (10+ points)
+  RED: "&c⚔ %player%"
+
+# ────────────────────────────────────────────────────────────────
+# Criminal Points Thresholds
+# ────────────────────────────────────────────────────────────────
+# Set the points required for each color level
+thresholds:
+  # Points needed to become ORANGE (minor criminal)
+  ORANGE: 3
+  # Points needed to become RED (dangerous criminal)
+  RED: 10
+
+# ────────────────────────────────────────────────────────────────
+# Point System Settings
+# ────────────────────────────────────────────────────────────────
+# Configure how points are gained and lost
+points:
+  # Points gained when attacking another player
+  attack: 2
+  # Points gained when killing another player
+  kill: 5
+  # Points lost per minute (decay rate)
+  decay_per_minute: 1
+
+# ────────────────────────────────────────────────────────────────
+# Display Settings
+# ────────────────────────────────────────────────────────────────
+# Control how and where the cursor colors are displayed
+settings:
+  # Update player names in the tab list
+  update_tab_list: true
+
+  # Update player display names in chat and above head
+  update_display_name: true
+
+  # Use scoreboard teams for name coloring (most reliable)
+  use_teams: true
+
+  # ────────────────────────────────────────────────────────────────
+  # Advanced Format Examples (Comment out the ones above to use these)
+  # ────────────────────────────────────────────────────────────────
+  #formats:
+  # Simple colored names only
+  # GREEN: "&a%player%"
+  # ORANGE: "&6%player%"
+  # RED: "&c%player%"
+
+  # Text prefixes
+  # GREEN: "&a[Clean] %player%"
+  # ORANGE: "&6[Risky] %player%"
+  # RED: "&c[Danger] %player%"
+
+  # Icons only
+  # GREEN: "&a✅ %player%"
+  # ORANGE: "&6⚠️ %player%"
+  # RED: "&c☠️ %player%"
+
+  # Gradient-like effect
+  # GREEN: "&a✦ %player%"
+  # ORANGE: "&e✦ %player%"
+  # RED: "&4✦ %player%"
+
+# ────────────────────────────────────────────────────────────────
+# Example Customization Ideas:
+# ────────────────────────────────────────────────────────────────
+#
+# 1. For a more strict server:
+# thresholds:
+#   ORANGE: 2
+#   RED: 5
+# points:
+#   attack: 3
+#   kill: 10
+#   decay_per_minute: 1
+#
+# 2. For a more forgiving server:
+# thresholds:
+#   ORANGE: 5
+#   RED: 15
+# points:
+#   attack: 1
+#   kill: 3
+#   decay_per_minute: 2
+#
+# 3. For a roleplay server:
+# formats:
+#   GREEN: "&a[Citizen] %player%"
+#   ORANGE: "&6[Outlaw] %player%"
+#   RED: "&c[Bandit] %player%"
+#
+# 4. For a minimal look:
+# formats:
+#   GREEN: "&a%player%"
+#   ORANGE: "&6%player%"
+#   RED: "&c%player%"
+# settings:
+#   update_tab_list: true
+#   update_display_name: false
+#   use_teams: true

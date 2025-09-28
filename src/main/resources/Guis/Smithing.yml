@@ -13,3 +13,5 @@ items:
     lore: []
 
 air_slots: [10, 11, 19, 20, 22, 24, 28, 29]
+item_slot: [22]
+upgrade_slot: [24]

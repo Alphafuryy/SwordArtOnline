@@ -1,3 +1,4 @@
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\commands\ItemCommand.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\commands\RegionCommand.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\commands\SkillCommand.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\commands\SpawnCommand.java
@@ -5,6 +6,8 @@ C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\DoubleCleaveA
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\guis\CraftingGUI.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\guis\SmithingGUI.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\guis\SmithingMenuGUI.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\guis\CraftingListener.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\guis\SmithingListener.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\guis\SmithingMenuGUIListener.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\JoinListener.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\npcs\SmithingEntityListener.java
@@ -18,16 +21,23 @@ C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\Sta
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\listeners\TeleportListener.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\CursorManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\FloorManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\ItemManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\LoreManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\MessagesManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\RecipeManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\RegionManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\SkillManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\SoundManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\SpawnManager.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\StatsManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\StatusBarManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\managers\TaskManager.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\SwordArtOnline.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\ItemTabCompleter.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\RegionTabCompleter.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\SkillTabCompleter.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tabcompleters\SpawnTabCompleter.java
+C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tasks\SmithingTask.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\tasks\TeleportTask.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\utils\Floor.java
 C:\Users\SkAlpha\Documents\GitHub\SwordArtOnline\src\main\java\com\utils\GUI.java

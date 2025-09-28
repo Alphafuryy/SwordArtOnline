@@ -1,0 +1,17 @@
+bronze_lance:
+  name: '&6ʙʀᴏɴᴢᴇ ʟᴀɴᴄᴇ'
+  material: TRIDENT
+  rarity: Unique
+  stats:
+    HAND:
+      attack_damage: 12.0
+      attack_speed: -2.6
+      range: 0.5
+  flags:
+  - HIDE_ATTRIBUTES
+  - HIDE_ENCHANTS
+  - HIDE_UNBREAKABLE
+  - HIDE_DESTROYS
+  - HIDE_PLACED_ON
+  - HIDE_POTION_EFFECTS
+  - HIDE_DYE
